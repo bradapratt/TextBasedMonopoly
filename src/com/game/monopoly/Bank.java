@@ -8,7 +8,7 @@ class Bank {
      * @param buyer
      * @param propertyPrice
      */
-    public boolean payForProperty(Player buyer, int propertyPrice){
+    public static boolean payForProperty(Player buyer, int propertyPrice){
         return false;
     }
 
@@ -20,7 +20,7 @@ class Bank {
      * @param amount
      * @return
      */
-    public boolean payRent(Player owes, Player dueMoney, int amount){
+    public static boolean payRent(Player owes, Player dueMoney, int amount){
         return false;
     }
 
@@ -29,7 +29,7 @@ class Bank {
      * @param owes
      * @param amount
      */
-    private void collect(Player owes, int amount){
+    private static void collect(Player owes, int amount){
     }
 
     /**
@@ -37,7 +37,7 @@ class Bank {
      * @param dueMoney
      * @param amount
      */
-    private void pay(Player dueMoney, int amount){
+    private static void pay(Player dueMoney, int amount){
     }
 
     /**
@@ -45,7 +45,7 @@ class Bank {
      * @param owes
      * @param amount
      */
-    public void payIntoFreeParking(Player owes, int amount){
+    public static void payIntoFreeParking(Player owes, int amount){
     }
 
 }
