@@ -21,21 +21,24 @@ public class BankTest {
 
     @Test
     public void testPayForPropertyWalletGreaterThanPropPrice() {
-        assertTrue(Bank.payForProperty(p1, 260));
+        assertTrue(Bank.payForProperty(p1, prop1.getPrice()));
+        assertEquals(1240, p1.getWallet());
     }
 
     @Test
     public void testPayForPropertyWalletLessThanPropPrice() {
         p1.setWallet(100);
 
-        assertFalse(Bank.payForProperty(p1, 260));
+        assertFalse(Bank.payForProperty(p1, prop1.getPrice()));
+        assertEquals(100, p1.getWallet());
     }
 
     @Test
-    public void testPayForPropertyWalletEqualToPropPrice() {
+    public void testPayForPropertyWalletEqualToPropertyPrice() {
         p1.setWallet(260);
 
         assertTrue(Bank.payForProperty(p1, 260));
+        assertEquals(0, p1.getWallet());
     }
 
     @Test

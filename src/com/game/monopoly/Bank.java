@@ -11,7 +11,7 @@ class Bank {
      */
     public static boolean payForProperty(Player player, int propertyPrice){
         boolean result = false;
-        if (hasEnoughCash(player.getWallet() - propertyPrice)) {
+        if (hasEnoughCash(player, propertyPrice)) {
             collect(player, propertyPrice);
             result = true;
         }
@@ -30,7 +30,7 @@ class Bank {
      */
     public static boolean payRent(Player playerOne, Player playerTwo, int rent){
         boolean result = false;
-        if (hasEnoughCash(playerOne.getWallet() - rent)) {
+        if (hasEnoughCash(playerOne, rent)) {
             collect(playerOne, rent);
             pay(playerTwo, rent);
             result = true;
@@ -69,7 +69,11 @@ class Bank {
         player.setWallet(balance + amount);
     }
 
-    private static boolean hasEnoughCash(int i) {
-        return i >= ZERO;
+    private static boolean hasEnoughCash(Player player, int amount) {
+        boolean result = false;
+        if ((player.getWallet() - amount) >= amount || player.getWallet() == amount) {
+            result = true;
+        }
+        return result;
     }
 }
