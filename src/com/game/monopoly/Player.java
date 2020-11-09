@@ -18,10 +18,9 @@ class Player implements Comparable<Player> {
      * @param name
      * @param gamePiece
      */
-    public Player(String name, Piece gamePiece, int wallet) {
+    public Player(String name, Piece gamePiece) {
         this.name = name;
         this.gamePiece = gamePiece;
-        setWallet(1500);
     }
 
     /**
