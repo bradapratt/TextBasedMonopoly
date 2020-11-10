@@ -19,7 +19,7 @@ class Player implements Comparable<Player> {
      * @param name
      * @param gamePiece
      */
-    public Player(String name, Piece gamePiece) {
+    public Player(String name, Piece gamePiece, int wallet, int location) {
         setName(name);
         setGamePiece(gamePiece);
         setLocation(FIRST_LOCATION);
@@ -42,7 +42,7 @@ class Player implements Comparable<Player> {
      * Bought a new property, need add a copy to the property list for tracking.
      * @param copyOfNewProperty
      */
-    private void addProperty(Property copyOfNewProperty){
+    public void addProperty(Property copyOfNewProperty){
        properties.add(copyOfNewProperty);
     }
 
@@ -50,15 +50,18 @@ class Player implements Comparable<Player> {
      * Sold or lost a property, need to remove it from property list.
      * @param propertyName
      */
-    private void removeProperty(String propertyName){
+    public void removeProperty(String propertyName){
         properties.remove(propertyName);
     }
 
     /**
      * Save wallet amount to local var (and return), then set wallet to zero, clear property list.
      */
-    private int declareBankruptcy(){
-        return 0;
+    public int declareBankruptcy(){
+        int balance = getWallet();
+        setWallet(0);
+        properties.clear();
+        return balance;
     }
 
     /**
@@ -66,7 +69,7 @@ class Player implements Comparable<Player> {
      * @return
      */
     public List<Property> getProperties(){
-        return null;
+        return properties;
     }
 
     //**********ACCESSOR METHODS**********
