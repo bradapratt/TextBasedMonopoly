@@ -1,5 +1,6 @@
 package com.game.monopoly;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,8 +20,11 @@ class Player implements Comparable<Player> {
      * @param gamePiece
      */
     public Player(String name, Piece gamePiece) {
-        this.name = name;
-        this.gamePiece = gamePiece;
+        setName(name);
+        setGamePiece(gamePiece);
+        setLocation(FIRST_LOCATION);
+        setWallet(1500);
+        properties = new ArrayList<>();
     }
 
     /**
@@ -98,6 +102,7 @@ class Player implements Comparable<Player> {
     private void setLocation(int location) {
         this.location = location;
     }
+
     public int compareTo(Player other) {
         return this.getWallet() - other.getWallet();
     }

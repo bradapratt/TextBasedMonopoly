@@ -1,7 +1,7 @@
 package com.game.monopoly;
 
 public class Go extends Space{
-    private static final int go = 200;
+    private static final int GO = 200;
 
     public Go(String name) {
         super(name);
