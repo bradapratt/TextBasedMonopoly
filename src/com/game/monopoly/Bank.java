@@ -9,7 +9,7 @@ class Bank {
      * @param player
      * @param propertyPrice
      */
-    public static boolean payForProperty(Player player, int propertyPrice){
+    public static boolean payForProperty(Player player, int propertyPrice) {
         boolean result = false;
         if (hasEnoughCash(player, propertyPrice)) {
             collect(player, propertyPrice);
@@ -21,20 +21,20 @@ class Bank {
 
 
     /**
-     * Bank collects amount from the player one and pays to the owner (playerTwo) of property.
+     * Bank collects amount from the player one (tenant) and pays to player two (owner) of property.
      * Returns false if player doesn't have enough money (and needs to declare bankruptcy).
-     * @param playerOne
-     * @param playerTwo
+     * @param tenant
+     * @param owner
      * @param rent
      * @return
      */
-    public static boolean payRent(Player playerOne, Player playerTwo, int rent){
+    public static boolean payRent(Player tenant, Player owner, int rent) {
+        // TODO if tenant can't afford can't to pay, then owner seizes all of tenants property and is bankrupt
         boolean result = false;
-        if (hasEnoughCash(playerOne, rent)) {
-            collect(playerOne, rent);
-            pay(playerTwo, rent);
+        if (hasEnoughCash(tenant, rent)) {
+            collect(tenant, rent);
+            pay(owner, rent);
             result = true;
-
         }
         return result;
     }
@@ -45,8 +45,10 @@ class Bank {
      * @param tax
      */
     public static void payIntoFreeParking(Player player, int tax) {
-        collect(player, tax);
-
+        if (hasEnoughCash(player, tax)) {
+            collect(player, tax);
+            FreeParking.addToFreeParking(tax);
+        }
     }
 
     /**
