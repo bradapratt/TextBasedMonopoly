@@ -6,6 +6,11 @@ public class CommunityChest extends RandomCard{
     }
 
     @Override
+    public void execute(Player player, int diceRoll) {
+
+    }
+
+    @Override
     public void displayMessage() {
     }
 

@@ -7,6 +7,7 @@ public abstract class Space {
         this.name = name;
     }
 
+    public abstract void execute(Player player, int diceRoll);
     public abstract void displayMessage();
 
     //**********ACCESSOR METHODS**********

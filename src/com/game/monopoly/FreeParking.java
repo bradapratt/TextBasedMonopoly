@@ -10,6 +10,11 @@ public class FreeParking extends Space{
     }
 
     @Override
+    public void execute(Player player, int diceRoll) {
+
+    }
+
+    @Override
     public void displayMessage() {
     }
 

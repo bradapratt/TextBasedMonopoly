@@ -3,12 +3,13 @@ package com.game.monopoly;
 public abstract class OwnableSpace extends Space{
     private String owner;
     private int price;
-    boolean owned = false;
+    boolean isOwned;
 
     public OwnableSpace(String name, int price){
         super(name);
         owner = "Bank";
         setPrice(price);
+        isOwned = false;
     }
 
     /**
@@ -44,10 +45,10 @@ public abstract class OwnableSpace extends Space{
     }
 
     public boolean isOwned() {
-        return owned;
+        return isOwned;
     }
 
     public void setOwned(boolean owned) {
-        this.owned = owned;
+        this.isOwned = owned;
     }
 }
