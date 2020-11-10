@@ -9,8 +9,9 @@ public class Property extends OwnableSpace{
     }
 
     @Override
-    public int rent() {
-        return 0;
+    public int rent(Player player, RentContext context) {
+        // TODO rent is doubled if a player has a monopoly (all lots in a color-group)
+        return getRentAmt();
     }
 
     @Override

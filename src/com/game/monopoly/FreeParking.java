@@ -1,12 +1,12 @@
 package com.game.monopoly;
 
 public class FreeParking extends Space{
-    private final int FREE_PARKING_MIN = 0;
-    private int freeParking;
+    private static final int MIN_VALUE = 0;
+    private static int freeParking;
 
     public FreeParking(String name) {
         super(name);
-        setFreeParking(0);
+        setFreeParking(MIN_VALUE);
     }
 
     @Override
@@ -15,22 +15,25 @@ public class FreeParking extends Space{
 
     /**
      * Adds current parking fund to player's wallet and resets fund to zero.
-     * @param whoParked
+     * @param player
      */
-    public void collectFreeParking(Player whoParked){
+    public static void collectFreeParking(Player player) {
+        int balance = player.getWallet();
+        player.setWallet(balance + getFreeParking());
+        setFreeParking(MIN_VALUE);
     }
 
-    public void addToFreeParking(int amount){
-        freeParking += amount;
+    public static void addToFreeParking(int amount){
+        setFreeParking(getFreeParking() + amount);
     }
 
     //**********ACCESSOR METHODS**********
 
-    private int getFreeParking() {
+    private static int getFreeParking() {
         return freeParking;
     }
 
-    private void setFreeParking(int freeParking) {
-        this.freeParking = freeParking;
+    private static void setFreeParking(int freeParking) {
+        FreeParking.freeParking = freeParking;
     }
 }
