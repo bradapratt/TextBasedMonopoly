@@ -5,13 +5,20 @@ import java.util.Collection;
 import java.util.List;
 
 class Player implements Comparable<Player> {
-    private  final int FIRST_LOCATION = 0;
-    private  final int LAST_LOCATION = 37;
+    private final int FIRST_LOCATION = 0;
+    private final int LAST_LOCATION = 37;
+    private final int MIN_NUM_RAILROAD = 1;
+    private final int MAX_NUM_RAILROAD = 4;
+    private final int MIN_NUM_UTILITIES = 1;
+    private final int MAX_NUM_UTILITIES = 2;
     private int wallet;
     private String name;
     private List<Property> properties;
     private Piece gamePiece;
     private int location;
+    private int numRailRoads;
+    private int numUtilities;
+
 
 
     /**
@@ -44,6 +51,8 @@ class Player implements Comparable<Player> {
      */
     public void addProperty(Property copyOfNewProperty){
        properties.add(copyOfNewProperty);
+       getNumRailRoads();
+       getNumUtilities();
     }
 
     /**
@@ -52,6 +61,8 @@ class Player implements Comparable<Player> {
      */
     public void removeProperty(String propertyName){
         properties.remove(propertyName);
+        getNumRailRoads();
+        getNumUtilities();
     }
 
     /**
@@ -70,6 +81,23 @@ class Player implements Comparable<Player> {
      */
     public List<Property> getProperties(){
         return properties;
+    }
+
+    /**
+     * create getNumRailRoads and getNumUtilities
+     */
+    public int getNumRailRoads(){
+        for(Property railroads : properties) {
+            if (MIN_NUM_RAILROAD >= 1 || MAX_NUM_RAILROAD <= 4) ;
+        }
+        return numRailRoads;
+    }
+
+    public int getNumUtilities(){
+        for(Property utilities : properties) {
+            if (MIN_NUM_UTILITIES >= 1 || MAX_NUM_UTILITIES <= 2) ;
+        }
+            return numUtilities;
     }
 
     //**********ACCESSOR METHODS**********
