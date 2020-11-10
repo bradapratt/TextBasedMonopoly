@@ -3,6 +3,7 @@ package com.game.monopoly;
 public abstract class OwnableSpace extends Space{
     private String owner;
     private int price;
+    boolean owned = false;
 
     public OwnableSpace(String name, int price){
         super(name);
@@ -10,7 +11,13 @@ public abstract class OwnableSpace extends Space{
         setPrice(price);
     }
 
-    public abstract int rent();
+    /**
+     * Calculates the rent total owed to a player that owns an own-able space.
+     * @param player
+     * @param context
+     * @return
+     */
+    public abstract int rent(Player player, RentContext context);
 
     /**
      * Sets the new owner name and returns the price.
@@ -34,5 +41,13 @@ public abstract class OwnableSpace extends Space{
 
     protected void setPrice(int price) {
         this.price = price;
+    }
+
+    public boolean isOwned() {
+        return owned;
+    }
+
+    public void setOwned(boolean owned) {
+        this.owned = owned;
     }
 }
