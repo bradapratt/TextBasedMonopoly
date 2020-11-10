@@ -3,7 +3,7 @@ package com.game.monopoly;
 public abstract class OwnableSpace extends Space{
     private String owner;
     private int price;
-    boolean isOwned;
+    private boolean isOwned;
 
     public OwnableSpace(String name, int price){
         super(name);
