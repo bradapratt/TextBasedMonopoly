@@ -16,6 +16,8 @@ class Player implements Comparable<Player> {
     private List<Property> properties;
     private Piece gamePiece;
     private int location;
+    private int number;
+    private boolean isBankrupt;
     private int numRailRoads;
     private int numUtilities;
 
@@ -26,11 +28,13 @@ class Player implements Comparable<Player> {
      * @param name
      * @param gamePiece
      */
-    public Player(String name, Piece gamePiece) {
+    public Player(String name, Piece gamePiece, int num) {
         setName(name);
         setGamePiece(gamePiece);
+        setNumber(num);
         setLocation(FIRST_LOCATION);
         setWallet(1500);
+        setBankrupt(false);
         properties = new ArrayList<>();
     }
 
@@ -118,6 +122,12 @@ class Player implements Comparable<Player> {
         return location;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public boolean isBankrupt() { return isBankrupt; }
+
     public void setWallet(int wallet) {
         this.wallet = wallet;
     }
@@ -132,6 +142,14 @@ class Player implements Comparable<Player> {
 
     private void setLocation(int location) {
         this.location = location;
+    }
+
+    private void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setBankrupt(boolean bankrupt) {
+        isBankrupt = bankrupt;
     }
 
     public int compareTo(Player other) {

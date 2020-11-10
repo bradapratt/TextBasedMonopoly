@@ -6,80 +6,101 @@ import java.io.IOException;
 import java.util.*;
 
 public class Game {
-    private final static int MIN_ROUNDS = 3;    //minimum # of rounds needed to play
+    private final static int MIN_ROUNDS = 1;    //minimum # of rounds needed to play
     private final static int MIN_PLAYERS = 2;   //minimum # of players needed to play
     private final static int MAX_PLAYERS = 8;   //maximum # of players possible
+    private final Prompter P1;
+    private final List<Space> BOARD;
 
     private List<Player> playerList;
-    private List<Space> board;
-    private List<Player> currentRankings;
-    private Stack<Player> finalRankings;
+    private Stack<Player> bankruptcies;
     private int numRounds;
     private int currentRound;
     private int numPlayers;
+    private boolean lastPlayerStanding;
+    private boolean wantsToPlayAgain;
 
-    private Prompter p1;
 
 
     /**
      * Initialize the board;
      */
     public Game() {
-        p1 = new Prompter(new Scanner(System.in));
-        board = new ArrayList<>();
+        lastPlayerStanding = false;
+        wantsToPlayAgain = false;
+        P1 = new Prompter(new Scanner(System.in));
+        BOARD = new ArrayList<>();
 
         //load up the board
-        board.add(new Go("Go"));                                            //0
-        board.add(new Property("Mediterranean Avenue", 60, 2));   //1
-        board.add(new CommunityChest("Community Chest"));                   //2
-        board.add(new Property("Baltic Avenue", 60, 4));          //3
-        board.add(new TaxSpace("Income Tax", 200));                //4
-        board.add(new Railroad("Reading Railroad", 200));              //5
-        board.add(new Property("Oriental Avenue", 100, 6));       //6
-        board.add(new Chance("Chance"));                                    //7
-        board.add(new Property("Vermont Avenue", 100, 6));        //8
-        board.add(new Property("Connecticut Avenue", 120, 8));    //9
+        BOARD.add(new Go("Go"));                                            //0
+        BOARD.add(new Property("Mediterranean Avenue", 60, 2));   //1
+        BOARD.add(new CommunityChest("Community Chest"));                   //2
+        BOARD.add(new Property("Baltic Avenue", 60, 4));          //3
+        BOARD.add(new TaxSpace("Income Tax", 200));                //4
+        BOARD.add(new Railroad("Reading Railroad", 200));              //5
+        BOARD.add(new Property("Oriental Avenue", 100, 6));       //6
+        BOARD.add(new Chance("Chance"));                                    //7
+        BOARD.add(new Property("Vermont Avenue", 100, 6));        //8
+        BOARD.add(new Property("Connecticut Avenue", 120, 8));    //9
         //***"Jail" Would Go Here***
-        board.add(new Property("St. Charles Place", 140, 10));    //10
-        board.add(new Utility("Electric Company", 150));               //11
-        board.add(new Property("States Avenue", 140, 10));        //12
-        board.add(new Property("Virginia Avenue", 160, 12));      //13
-        board.add(new Railroad("Pennsylvania Railroad", 200));         //14
-        board.add(new Property("St. James Place", 180, 14));      //15
-        board.add(new CommunityChest("Community Chest"));                   //16
-        board.add(new Property("Tennessee", 180, 14));            //17
-        board.add(new Property("New York Avenue", 200, 16));      //18
-        board.add(new FreeParking("Free Parking"));                         //19
-        board.add(new Property("Kentucky Avenue", 220, 18));      //20
-        board.add(new Chance("Chance"));                                    //21
-        board.add(new Property("Indiana Avenue", 220, 18));       //22
-        board.add(new Property("Illinois Avenue", 240, 20));      //23
-        board.add(new Railroad("B. & O. Railroad", 200));              //24
-        board.add(new Property("Atlantic Avenue", 260, 22));      //25
-        board.add(new Property("Ventnor Avenue", 260, 22));       //26
-        board.add(new Utility("Water Works", 150));                    //27
-        board.add(new Property("Marvin Gardens", 280, 24));       //28
+        BOARD.add(new Property("St. Charles Place", 140, 10));    //10
+        BOARD.add(new Utility("Electric Company", 150));               //11
+        BOARD.add(new Property("States Avenue", 140, 10));        //12
+        BOARD.add(new Property("Virginia Avenue", 160, 12));      //13
+        BOARD.add(new Railroad("Pennsylvania Railroad", 200));         //14
+        BOARD.add(new Property("St. James Place", 180, 14));      //15
+        BOARD.add(new CommunityChest("Community Chest"));                   //16
+        BOARD.add(new Property("Tennessee", 180, 14));            //17
+        BOARD.add(new Property("New York Avenue", 200, 16));      //18
+        BOARD.add(new FreeParking("Free Parking"));                         //19
+        BOARD.add(new Property("Kentucky Avenue", 220, 18));      //20
+        BOARD.add(new Chance("Chance"));                                    //21
+        BOARD.add(new Property("Indiana Avenue", 220, 18));       //22
+        BOARD.add(new Property("Illinois Avenue", 240, 20));      //23
+        BOARD.add(new Railroad("B. & O. Railroad", 200));              //24
+        BOARD.add(new Property("Atlantic Avenue", 260, 22));      //25
+        BOARD.add(new Property("Ventnor Avenue", 260, 22));       //26
+        BOARD.add(new Utility("Water Works", 150));                    //27
+        BOARD.add(new Property("Marvin Gardens", 280, 24));       //28
         //***"Go To Jail" Would Go Here
-        board.add(new Property("Pacific Avenue", 300, 26));       //29
-        board.add(new Property("North Carolina Avenue", 300, 26));//30
-        board.add(new CommunityChest("Community Chest"));                   //31
-        board.add(new Property("Pennsylvania Avenue", 320, 28));  //32
-        board.add(new Railroad("Short Line", 200));                    //33
-        board.add(new Chance("Chance"));                                    //34
-        board.add(new Property("Park Place", 350, 35));           //35
-        board.add(new TaxSpace("Luxury Tax", 75));                 //36
-        board.add(new Property("Boardwalk", 400, 50));            //37
+        BOARD.add(new Property("Pacific Avenue", 300, 26));       //29
+        BOARD.add(new Property("North Carolina Avenue", 300, 26));//30
+        BOARD.add(new CommunityChest("Community Chest"));                   //31
+        BOARD.add(new Property("Pennsylvania Avenue", 320, 28));  //32
+        BOARD.add(new Railroad("Short Line", 200));                    //33
+        BOARD.add(new Chance("Chance"));                                    //34
+        BOARD.add(new Property("Park Place", 350, 35));           //35
+        BOARD.add(new TaxSpace("Luxury Tax", 75));                 //36
+        BOARD.add(new Property("Boardwalk", 400, 50));            //37
     }
 
     /**
-     * Send welcome message to console, prompt players for info, set values, etc.
+     * Send welcome message to console, sends welcome message, runs game iterations.
      */
-    public void startGame() throws IOException {
-        Message.banner();
+    public void setUp() throws IOException {
+        Message.banner("banner.txt", "data");
         Message.welcome();
+
+        do {
+            startGame();
+            endGame();
+            playAgain();
+        }while (wantsToPlayAgain);
+    }
+
+    /**
+     * Initializes game values such as number of rounds and players, and executes rounds.
+     */
+    public void startGame(){
         inputNumPlayers();
         inputNumRounds();
         initializePlayers();
+
+        while (checkRoundCount() > 0 && playerList.size() > 1){
+            setCurrentRound(getCurrentRound()+1);
+            startRound();
+            endRound();
+        }
     }
 
     /**
@@ -90,9 +111,9 @@ public class Game {
         int num = 0;
 
         while (isNotValid){
-            String numP = p1.prompt("Please enter number of players, up to 8: ", "\\d", Message.invalidNumber());
+            String numP = P1.prompt("Please enter number of players, up to 8: ", "\\d", Message.invalidNumber());
             num = Integer.parseInt(numP);
-            if (num < 2 || num > 8){
+            if (num < MIN_PLAYERS || num > MAX_PLAYERS){
                 System.out.println("Number of players must be between 2 and 8. Please try again.");
             }else{
                 isNotValid = false;
@@ -109,12 +130,12 @@ public class Game {
         int num = 0;
 
         while (isNotValid){
-            String numR = p1.prompt("Please enter number of desired rounds: ", "\\d+", Message.invalidNumber());
+            String numR = P1.prompt("Please enter number of desired rounds: ", "\\d+", Message.invalidNumber());
             num = Integer.parseInt(numR);
-            if (num <= 0){
-                System.out.println("Number of rounds must be greater than 0. Please try again.");
-            }else{
+            if (num >= MIN_ROUNDS){
                 isNotValid = false;
+            }else{
+                System.out.println("Number of rounds must be greater than 0. Please try again.");
             }
         }
         setNumRounds(num);
@@ -126,17 +147,18 @@ public class Game {
      */
     private void initializePlayers(){
         playerList = new ArrayList<>();
+        bankruptcies = new Stack<>();
         List<String> available = Piece.classToString();
 
         for (int i = 1; i <= numPlayers; i++){
-            String name = p1.prompt("Enter the name for Player" + i + ": ");
+            String name = P1.prompt("Enter the name for Player" + i + ": ");
             boolean notValidPiece = true;
             while (notValidPiece) {
-                String piece = p1.prompt(Message.choosePiece(available));
+                String piece = P1.prompt(Message.choosePiece(available));
                 if (available.contains(piece)) {
                     Piece piece1 = Piece.valueOf(piece);
                     available.remove(piece);
-                    Player current = new Player(name, piece1);
+                    Player current = new Player(name, piece1, i);
                     playerList.add(current);
                     notValidPiece = false;
                 }else{
@@ -151,40 +173,69 @@ public class Game {
      */
     private void startRound(){
         //for each Player: rollDice() x2, Player.takeTurn()
+        Message.displayRoundCount(getCurrentRound());
+
+        for (Player player: playerList){
+            int roll1 = rollDice();
+            int roll2 = rollDice();
+            Message.playerTurn(player, roll1, roll2);
+            int newLoc = player.movePlayer((roll1 + roll2));
+            BOARD.get(newLoc).execute(player, (roll1 + roll2));
+
+            if (player.isBankrupt()){
+                bankruptcies.push(player);
+                playerList.remove(player);
+            }
+
+            if (playerList.size() == 1){
+                lastPlayerStanding = true;
+                break;
+            }
+        }
     }
 
     /**
-     * Game will end the round, display current rankings, notify #of rounds left, decrement round count.
+     * Game will end the round, display current rankings, notify #of rounds left
      */
     private void endRound(){
+        Message.endOfRound(getCurrentRound());
+        displayCurrentRankings();
+        Message.remainingRounds(checkRoundCount());
     }
 
     /**
      * Wrap up the game, display winners, ask players if they want to start another game.
      */
-    private void endGame(){
+    private void endGame() throws IOException {
+        Message.gameOver("endgame.txt", "data");
+        Collections.sort(playerList);
+
+        if (lastPlayerStanding){
+            Message.endGame_lastPlayer(playerList.get(0));
+        }else{
+            Message.endGame_lastRound(playerList.get(0));
+        }
+
+        while(!bankruptcies.isEmpty()){
+            playerList.add(bankruptcies.pop());
+        }
+
+        Message.displayFinalRankings(playerList);
     }
 
-    private int getNumRounds(){
-        return numRounds;
-    }
-
-    private int getNumPlayers(){
-        return numPlayers;
-    }
-
-    private int getCurrentRound(){ return currentRound; }
-
-    private void setNumRounds(int numRounds) {
-        this.numRounds = numRounds;
-    }
-
-    private void setCurrentRound(int currentRound) {
-        this.currentRound = currentRound;
-    }
-
-    private void setNumPlayers(int numPlayers) {
-        this.numPlayers = numPlayers;
+    /**
+     * Prompts the player if they want to play again and updates the boolean var
+     */
+    private void playAgain(){
+        String again = P1.prompt("Would you like to play again? (Y/N)", "Y|y|N|n", "Please enter Y or N.");
+        switch (again){
+            case "Y": case "y":
+                setWantsToPlayAgain(true);
+                Message.playAgain();
+            case "N": case "n":
+                setWantsToPlayAgain(false);
+                Message.dontPlayAgain();
+        }
     }
 
     /**
@@ -199,7 +250,7 @@ public class Game {
      * Displays current winner/rankings to console.
      */
     private void displayCurrentRankings(){
-        currentRankings = new ArrayList<>(playerList);
+        List<Player> currentRankings = new ArrayList<>(playerList);
         Collections.sort(currentRankings);
 
         Message.displayCurrentRankings(currentRankings);
@@ -211,5 +262,44 @@ public class Game {
      */
     private int rollDice(){
         return Dice.rollDice();
+    }
+
+    //***************ACCESSOR METHODS***************
+    private int getNumRounds(){
+        return numRounds;
+    }
+
+    private int getNumPlayers(){
+        return numPlayers;
+    }
+
+    private int getCurrentRound(){ return currentRound; }
+
+    private boolean isLastPlayerStanding() {
+        return lastPlayerStanding;
+    }
+
+    private boolean wantsToPlayAgain() {
+        return wantsToPlayAgain;
+    }
+
+    private void setNumRounds(int numRounds) {
+        this.numRounds = numRounds;
+    }
+
+    private void setCurrentRound(int currentRound) {
+        this.currentRound = currentRound;
+    }
+
+    private void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
+
+    private void setLastPlayerStanding(boolean lastPlayerStanding) {
+        this.lastPlayerStanding = lastPlayerStanding;
+    }
+
+    private void setWantsToPlayAgain(boolean wantsToPlayAgain) {
+        this.wantsToPlayAgain = wantsToPlayAgain;
     }
 }

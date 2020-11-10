@@ -12,8 +12,8 @@ public class BankTest {
 
     @Before
     public void setUp() {
-        p1 = new Player("John", Piece.CAT);
-        p2 = new Player("Sara", Piece.RUBBER_DUCKY);
+        p1 = new Player("John", Piece.CAT, 1);
+        p2 = new Player("Sara", Piece.RUBBER_DUCKY, 2);
         p1.setWallet(1500);
         p2.setWallet(1500);
         prop1 = new Property("Atlantic Avenue", 260, 22);

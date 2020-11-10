@@ -15,6 +15,7 @@ public class GameClient {
 //        String name = p1.prompt("Please enter your name: ");
 //        System.out.println(name);
         Game game1 = new Game();
-        game1.startGame();
+        game1.setUp();
+
     }
 }
