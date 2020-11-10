@@ -92,14 +92,14 @@ class Player implements Comparable<Player> {
      */
     public int getNumRailRoads(){
         for(Property railroads : properties) {
-            if (MIN_NUM_RAILROAD >= 1 || MAX_NUM_RAILROAD <= 4) ;
+            if (numRailRoads >= MIN_NUM_RAILROAD  || numRailRoads <= MAX_NUM_RAILROAD ) ;
         }
         return numRailRoads;
     }
 
     public int getNumUtilities(){
         for(Property utilities : properties) {
-            if (MIN_NUM_UTILITIES >= 1 || MAX_NUM_UTILITIES <= 2) ;
+            if (numUtilities >= MIN_NUM_UTILITIES || numUtilities <= MAX_NUM_UTILITIES) ;
         }
             return numUtilities;
     }
