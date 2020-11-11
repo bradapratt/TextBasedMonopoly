@@ -1,7 +1,8 @@
 package com.game.monopoly;
 
-public class Utility extends OwnableSpace{
-    public Utility(String name, int price){
+public class Utility extends OwnableSpace {
+
+    public Utility(String name, int price) {
         super(name, price);
     }
 
@@ -9,12 +10,13 @@ public class Utility extends OwnableSpace{
      * Utility rent is determined by the number of utilities a player owns.
      * One owned - 4x the amount shown on dice
      * Both owned - 10x the amount shown on dice
-     * @param player
+     *
+     * @param owner
      * @param context
      * @return
      */
     @Override
-    public int rent(Player player, RentContext context) {
+    public int rent(Player owner, RentContext context) {
         int diceTotal = context.getDiceRoll();
         int result = switch (context.getNumberOwned()) {
             case 1 -> 4 * diceTotal;
@@ -26,8 +28,28 @@ public class Utility extends OwnableSpace{
     }
 
     @Override
-    public void execute(Player player, int diceRoll) {
-
+    public void execute(Player tenant, int diceRoll) {
+        if (!this.isOwned()) {
+            // ask player if they want to buy it
+            if (true) {
+                // try to buy property
+                boolean paid = Bank.payForProperty(tenant, this.getPrice());
+                if (paid) {
+                    this.setOwner(tenant);
+                } else {
+                    // tell player they don't have enough money
+                }
+            } else {
+                // do nothing??
+            }
+        } else {
+            Player owner = this.getOwner();
+            RentContext ctx = new RentContext();
+            ctx.setDiceRoll(diceRoll);
+            ctx.setNumberOwned(owner.getNumUtilities());
+            boolean paid = Bank.payRent(tenant, owner, this.rent(owner, ctx));
+            // if paid is false, then player is bankrupt
+        }
     }
 
     @Override
