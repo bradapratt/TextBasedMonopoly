@@ -1,5 +1,7 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
+
 /**
  * Class Chance represents the Chance space on a Monopoly board.
  *
@@ -17,7 +19,7 @@ public class Chance extends RandomCard{
      * @param diceRoll - current player's dice roll total
      */
     @Override
-    public void execute(Player player, int diceRoll) {
+    public void execute(Player player, int diceRoll, Prompter input) {
         displayMessage();
         drawCard(player, diceRoll);
     }

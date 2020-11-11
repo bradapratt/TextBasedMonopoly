@@ -194,7 +194,7 @@ public class Game {
                 Bank.pay(player, 200);
             }
 
-            BOARD.get(newLoc).execute(player, (roll1 + roll2)); //land on new space
+            BOARD.get(newLoc).execute(player, (roll1 + roll2), P1); //land on new space
 
             if (player.isBankrupt()){
                 bankruptcies.push(player);

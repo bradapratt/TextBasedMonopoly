@@ -1,5 +1,7 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
+
 public class Utility extends OwnableSpace {
 
     public Utility(String name, int price) {
@@ -12,23 +14,22 @@ public class Utility extends OwnableSpace {
      * Both owned - 10x the amount shown on dice
      *
      * @param owner
-     * @param context
+     * @param diceRoll
      * @return
      */
     @Override
-    public int rent(Player owner, RentContext context) {
-        int diceTotal = context.getDiceRoll();
-        int result = switch (context.getNumberOwned()) {
-            case 1 -> 4 * diceTotal;
-            case 2 -> 10 * diceTotal;
+    public int rent(Player owner, int diceRoll) {
+        int result = switch (owner.getNumUtilities()) {
+            case 1 -> 4 * diceRoll;
+            case 2 -> 10 * diceRoll;
 
-            default -> throw new IllegalStateException("Unexpected value: " + context.getDiceRoll());
+            default -> throw new IllegalStateException("Unexpected value: " + diceRoll);
         };
         return result;
     }
 
     @Override
-    public void execute(Player tenant, int diceRoll) {
+    public void execute(Player tenant, int diceRoll, Prompter input) {
         if (!this.isOwned()) {
             // ask player if they want to buy it
             String buy = getPrompter().prompt("Would you like to buy this property? " +
@@ -39,6 +40,7 @@ public class Utility extends OwnableSpace {
                     boolean paid = Bank.payForProperty(tenant, this.getPrice());
                     if (paid) {
                         this.setOwner(tenant);
+                        this.setOwned(true);
                     } else {
                         // tell player they don't have enough money
                         Message.cantBuyProperty(this.getName(), this.getPrice(), tenant.getWallet());
@@ -51,10 +53,7 @@ public class Utility extends OwnableSpace {
             }
         } else {
             Player owner = this.getOwner();
-            RentContext ctx = new RentContext();
-            ctx.setDiceRoll(diceRoll);
-            ctx.setNumberOwned(owner.getNumRailRoads());
-            boolean paid = Bank.payRent(tenant, owner, this.rent(owner, ctx));
+            boolean paid = Bank.payRent(tenant, owner, this.rent(owner, diceRoll));
         }
     }
 

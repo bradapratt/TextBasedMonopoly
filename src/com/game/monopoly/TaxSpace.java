@@ -1,5 +1,7 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
+
 public class TaxSpace extends Space{
     private int taxAmount;
 
@@ -9,7 +11,7 @@ public class TaxSpace extends Space{
     }
 
     @Override
-    public void execute(Player player, int diceRoll) {
+    public void execute(Player player, int diceRoll, Prompter input) {
 
     }
 

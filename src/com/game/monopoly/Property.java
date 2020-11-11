@@ -1,5 +1,7 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
+
 public class Property extends OwnableSpace {
     private int rentAmt;
 
@@ -9,13 +11,13 @@ public class Property extends OwnableSpace {
     }
 
     @Override
-    public int rent(Player player, RentContext context) {
+    public int rent(Player player, int diceRoll) {
         // TODO rent is doubled if a player has a monopoly (all lots in a color-group)
         return getRentAmt();
     }
 
     @Override
-    public void execute(Player tenant, int diceRoll) {
+    public void execute(Player tenant, int diceRoll, Prompter input) {
         if (!this.isOwned()) {
             // ask player if they want to buy it
             String buy = getPrompter().prompt("Would you like to buy this property? " +
@@ -38,10 +40,7 @@ public class Property extends OwnableSpace {
             }
         } else {
             Player owner = this.getOwner();
-            RentContext ctx = new RentContext();
-            ctx.setDiceRoll(diceRoll);
-            ctx.setNumberOwned(owner.getNumRailRoads());
-            boolean paid = Bank.payRent(tenant, owner, this.rent(owner, ctx));
+            boolean paid = Bank.payRent(tenant, owner, this.rent(owner, diceRoll));
         }
     }
 

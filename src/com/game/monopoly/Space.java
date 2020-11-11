@@ -1,5 +1,7 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
+
 public abstract class Space {
     private String name;
 
@@ -7,7 +9,7 @@ public abstract class Space {
         this.name = name;
     }
 
-    public abstract void execute(Player player, int diceRoll);
+    public abstract void execute(Player player, int diceRoll, Prompter input);
     public abstract void displayMessage();
 
     //**********ACCESSOR METHODS**********

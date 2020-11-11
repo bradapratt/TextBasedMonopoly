@@ -1,5 +1,7 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
+
 /**
  * Class FreeParking represents the free parking space on a Monopoly board.
  *
@@ -21,7 +23,7 @@ public class FreeParking extends Space{
      * @param diceRoll - current player's dice roll total
      */
     @Override
-    public void execute(Player player, int diceRoll) {
+    public void execute(Player player, int diceRoll, Prompter input) {
         displayMessage();
         collectFreeParking(player);
 

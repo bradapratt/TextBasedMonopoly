@@ -1,5 +1,7 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
+
 /**
  * Class CommunityChest represents the Community Chest space on a Monopoly Board.
  *
@@ -17,7 +19,7 @@ public class CommunityChest extends RandomCard{
      * @param diceRoll - current player's dice roll total
      */
     @Override
-    public void execute(Player player, int diceRoll) {
+    public void execute(Player player, int diceRoll, Prompter input) {
         displayMessage();
         drawCard(player, diceRoll);
     }

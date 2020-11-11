@@ -1,5 +1,7 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
+
 /**
  * Class Go represents the "Go" space on a Monopoly board.
  *
@@ -19,7 +21,7 @@ public class Go extends Space{
      * @param diceRoll - current player's dice roll total
      */
     @Override
-    public void execute(Player player, int diceRoll) {
+    public void execute(Player player, int diceRoll, Prompter input) {
         displayMessage();
         collectGo(player);
     }
