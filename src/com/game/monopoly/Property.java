@@ -28,6 +28,7 @@ public class Property extends OwnableSpace {
                     boolean paid = Bank.payForProperty(tenant, this.getPrice());
                     if (paid) {
                         this.setOwner(tenant);
+                        this.setOwned(true);
                     } else {
                         // tell player they don't have enough money
                         Message.cantBuyProperty(this.getName(), this.getPrice(), tenant.getWallet());

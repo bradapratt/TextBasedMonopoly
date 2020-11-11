@@ -222,8 +222,7 @@ public class Game {
      */
     private void endGame() throws IOException {
         Message.gameOver("endgame.txt", "data");
-//        Collections.sort(playerList);
-        playerList.stream().sorted(Comparator.comparing(Player::getWallet).reversed());
+        playerList.stream().sorted(Comparator.comparing(Player::getWallet));
 
         if (isLastPlayerStanding()){
             Message.endGame_lastPlayer(playerList.get(0));
@@ -265,8 +264,7 @@ public class Game {
      */
     private void displayCurrentRankings(){
         List<Player> currentRankings = new ArrayList<>(playerList);
-//        Collections.sort(currentRankings);
-        currentRankings.stream().sorted(Comparator.comparing(Player::getWallet).reversed());
+        currentRankings.stream().sorted(Comparator.comparing(Player::getWallet));
 
         Message.displayCurrentRankings(currentRankings);
     }
