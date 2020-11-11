@@ -29,8 +29,30 @@ public class Railroad extends OwnableSpace{
     }
 
     @Override
-    public void execute(Player player, int diceRoll) {
-
+    public void execute(Player tenant, int diceRoll) {
+        if (!this.isOwned()) {
+            // ask player if they want to buy it
+            if (true) {
+                // try to buy property
+                boolean paid = Bank.payForProperty(tenant, this.getPrice());
+                if (paid) {
+                    this.setOwner(tenant);
+                }
+                else {
+                    // tell player they don't have enough money
+                }
+            }
+            else {
+                // do nothing??
+            }
+        }
+        else {
+            Player owner = this.getOwner();
+            RentContext ctx = new RentContext();
+            ctx.setDiceRoll(diceRoll);
+            ctx.setNumberOwned(owner.getNumRailRoads());
+            boolean paid = Bank.payRent(tenant, owner, this.rent(owner, ctx));
+        }
     }
 
     @Override
