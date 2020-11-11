@@ -1,0 +1,8 @@
+1234567891*********2*********3*********4*********5
+Welcome to Text-Based Monopoly! 
+
+Our implementation
+mimics the real-life Monopoly board game, with a 
+few changes for simplicity. There is no jail, no
+trading properties, and you can't build houses or
+hotels on properties. Supports 2-8 players.
