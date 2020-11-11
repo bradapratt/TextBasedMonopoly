@@ -7,13 +7,13 @@ import java.util.List;
 class Player implements Comparable<Player> {
     private final int FIRST_LOCATION = 0;
     private final int LAST_LOCATION = 37;
-    private final int MIN_NUM_RAILROAD = 1;
+    private final int MIN_NUM_RAILROAD = 0;
     private final int MAX_NUM_RAILROAD = 4;
-    private final int MIN_NUM_UTILITIES = 1;
+    private final int MIN_NUM_UTILITIES = 0;
     private final int MAX_NUM_UTILITIES = 2;
     private int wallet;
     private String name;
-    private List<Property> properties;
+    private List<OwnableSpace> properties;
     private Piece gamePiece;
     private int location;
     private int number;
@@ -55,8 +55,8 @@ class Player implements Comparable<Player> {
      */
     public void addProperty(Property copyOfNewProperty){
        properties.add(copyOfNewProperty);
-       getNumRailRoads();
-       getNumUtilities();
+       setNumRailRoads();
+       setNumUtilities();
     }
 
     /**
@@ -65,46 +65,45 @@ class Player implements Comparable<Player> {
      */
     public void removeProperty(String propertyName){
         properties.remove(propertyName);
-        getNumRailRoads();
-        getNumUtilities();
+        setNumRailRoads();
+        setNumUtilities();
     }
 
     /**
      * Save wallet amount to local var (and return), then set wallet to zero, clear property list.
      */
     public int declareBankruptcy(){
+        isBankrupt = true;
         int balance = getWallet();
         setWallet(0);
-        properties.clear();
         return balance;
+    }
+
+    public void removeAllProperties(){
+        getProperties().clear();
     }
 
     /**
      * Return property list to Game so they can reset owners/ transfer, before declaring bankruptcy.
      * @return
      */
-    public List<Property> getProperties(){
+    public List<OwnableSpace> getProperties(){
         return properties;
     }
 
     /**
      * create getNumRailRoads and getNumUtilities
      */
+
+    //**********ACCESSOR METHODS**********
+
     public int getNumRailRoads(){
-        for(Property railroads : properties) {
-            if (numRailRoads >= MIN_NUM_RAILROAD  || numRailRoads <= MAX_NUM_RAILROAD ) ;
-        }
         return numRailRoads;
     }
 
     public int getNumUtilities(){
-        for(Property utilities : properties) {
-            if (numUtilities >= MIN_NUM_UTILITIES || numUtilities <= MAX_NUM_UTILITIES) ;
-        }
-            return numUtilities;
+        return numUtilities;
     }
-
-    //**********ACCESSOR METHODS**********
 
     public int getWallet() {    //Game class needs access to this
         return wallet;
@@ -148,8 +147,29 @@ class Player implements Comparable<Player> {
         this.number = number;
     }
 
-    public void setBankrupt(boolean bankrupt) {
+    private void setBankrupt(boolean bankrupt) {
         isBankrupt = bankrupt;
+    }
+
+    private void setNumRailRoads() {
+        int counter = 0;
+        for(OwnableSpace rails : properties)
+        {
+            if(rails instanceof Railroad){
+                counter++;
+            }
+        }
+        numRailRoads = counter;
+    }
+
+    private void setNumUtilities() {
+        int counter = 0;
+        for(OwnableSpace utils : properties) {
+            if (utils instanceof Utility) {
+                counter++;
+            }
+        }
+        numUtilities = counter;
     }
 
     public int compareTo(Player other) {
