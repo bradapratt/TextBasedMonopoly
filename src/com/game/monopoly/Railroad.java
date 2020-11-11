@@ -33,16 +33,23 @@ public class Railroad extends OwnableSpace {
     public void execute(Player tenant, int diceRoll) {
         if (!this.isOwned()) {
             // ask player if they want to buy it
-            if (true) {
+            String buy = getPrompter().prompt("Would you like to buy this property? " +
+                    "(Y/N)", "Y|y|N|n", "Please enter Y or N.");
+            switch (buy) {
                 // try to buy property
-                boolean paid = Bank.payForProperty(tenant, this.getPrice());
-                if (paid) {
-                    this.setOwner(tenant);
-                } else {
-                    // tell player they don't have enough money
+                case "Y", "y" -> {
+                    boolean paid = Bank.payForProperty(tenant, this.getPrice());
+                    if (paid) {
+                        this.setOwner(tenant);
+                    } else {
+                        // tell player they don't have enough money
+                        Message.cantBuyProperty(this.getName(), this.getPrice(), tenant.getWallet());
+                    }
                 }
-            } else {
-                // do nothing??
+                // TODO should we do something here?
+                case "N", "n" -> {
+
+                }
             }
         } else {
             Player owner = this.getOwner();

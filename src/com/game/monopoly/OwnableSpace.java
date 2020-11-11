@@ -1,15 +1,21 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
+
+import java.util.Scanner;
+
 public abstract class OwnableSpace extends Space {
     private Player owner;
     private int price;
     private boolean isOwned;
+    private Prompter prompter;
 
     public OwnableSpace(String name, int price) {
         super(name);
         owner = null;
         setPrice(price);
         setOwned(false);
+        prompter = new Prompter(new Scanner(System.in));
     }
 
     protected class RentContext {
@@ -74,5 +80,9 @@ public abstract class OwnableSpace extends Space {
 
     public void setOwned(boolean owned) {
         this.isOwned = owned;
+    }
+
+    public Prompter getPrompter() {
+        return prompter;
     }
 }

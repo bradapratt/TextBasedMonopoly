@@ -233,4 +233,9 @@ class Message {
     public static void landedCommunityChest() {
         System.out.println("You landed on Community Chest. You draw a random card from the pile and it says: ");
     }
+
+    public static void cantBuyProperty(String name, int price, int wallet) {
+        System.out.println("You don't have enough money to buy " + name + ".");
+        System.out.println(name + " costs $" + price + ", you have $" + wallet + " in your account.");
+    }
 }
