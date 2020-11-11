@@ -3,8 +3,9 @@ package com.game.monopoly;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
-class Player implements Comparable<Player> {
+class Player {
     private final int FIRST_LOCATION = 0;
     private final int LAST_LOCATION = 37;
     private final int MIN_NUM_RAILROAD = 0;
@@ -23,9 +24,9 @@ class Player implements Comparable<Player> {
     private int numUtilities;
 
 
-
     /**
      * Constructor: initial values, wallet = 1500, properties = {}, location = 0
+     *
      * @param name
      * @param gamePiece
      */
@@ -43,13 +44,13 @@ class Player implements Comparable<Player> {
     /**
      * Get dice roll from game, move spaces (update location), return new location to game.
      */
-    public int movePlayer(int diceRoll){
+    public int movePlayer(int diceRoll) {
         setPassedGo(false);     //reset flag to false
         setLocation(getLocation() + diceRoll);
-        if (getLocation() > LAST_LOCATION){
+        if (getLocation() > LAST_LOCATION) {
             setLocation(getLocation() - LAST_LOCATION - 1);
 
-            if (getLocation() != 0){    //set flag to true because you passed go but didn't land on it
+            if (getLocation() != 0) {    //set flag to true because you passed go but didn't land on it
                 setPassedGo(true);
             }
         }
@@ -58,19 +59,21 @@ class Player implements Comparable<Player> {
 
     /**
      * Bought a new property, need add a copy to the property list for tracking.
+     *
      * @param copyOfNewProperty
      */
-    public void addProperty(Property copyOfNewProperty){
-       properties.add(copyOfNewProperty);
-       setNumRailRoads();
-       setNumUtilities();
+    public void addProperty(Property copyOfNewProperty) {
+        properties.add(copyOfNewProperty);
+        setNumRailRoads();
+        setNumUtilities();
     }
 
     /**
      * Sold or lost a property, need to remove it from property list.
+     *
      * @param propertyName
      */
-    public void removeProperty(String propertyName){
+    public void removeProperty(String propertyName) {
         properties.remove(propertyName);
         setNumRailRoads();
         setNumUtilities();
@@ -79,22 +82,23 @@ class Player implements Comparable<Player> {
     /**
      * Save wallet amount to local var (and return), then set wallet to zero, clear property list.
      */
-    public int declareBankruptcy(){
+    public int declareBankruptcy() {
         isBankrupt = true;
         int balance = getWallet();
         setWallet(0);
         return balance;
     }
 
-    public void removeAllProperties(){
+    public void removeAllProperties() {
         getProperties().clear();
     }
 
     /**
      * Return property list to Game so they can reset owners/ transfer, before declaring bankruptcy.
+     *
      * @return
      */
-    public List<OwnableSpace> getProperties(){
+    public List<OwnableSpace> getProperties() {
         return properties;
     }
 
@@ -103,12 +107,11 @@ class Player implements Comparable<Player> {
      */
 
     //**********ACCESSOR METHODS**********
-
-    public int getNumRailRoads(){
+    public int getNumRailRoads() {
         return numRailRoads;
     }
 
-    public int getNumUtilities(){
+    public int getNumUtilities() {
         return numUtilities;
     }
 
@@ -132,7 +135,9 @@ class Player implements Comparable<Player> {
         return number;
     }
 
-    public boolean isBankrupt() { return isBankrupt; }
+    public boolean isBankrupt() {
+        return isBankrupt;
+    }
 
     public boolean passedGo() {
         return passedGo;
@@ -164,9 +169,8 @@ class Player implements Comparable<Player> {
 
     private void setNumRailRoads() {
         int counter = 0;
-        for(OwnableSpace rails : properties)
-        {
-            if(rails instanceof Railroad){
+        for (OwnableSpace rails : properties) {
+            if (rails instanceof Railroad) {
                 counter++;
             }
         }
@@ -175,7 +179,7 @@ class Player implements Comparable<Player> {
 
     private void setNumUtilities() {
         int counter = 0;
-        for(OwnableSpace utils : properties) {
+        for (OwnableSpace utils : properties) {
             if (utils instanceof Utility) {
                 counter++;
             }
@@ -186,8 +190,26 @@ class Player implements Comparable<Player> {
     public void setPassedGo(boolean passedGo) {
         this.passedGo = passedGo;
     }
+//
+//    public int compareTo(Player other) {
+//        return this.getWallet() - other.getWallet();
+//    }
 
-    public int compareTo(Player other) {
-        return this.getWallet() - other.getWallet();
+    @Override
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof Player) {
+            Player other = (Player) obj;
+            result = this.getWallet() == other.getWallet() &&
+                    this.getLocation() == other.getLocation() &&
+                    this.getName().equals(other.getName()) &&
+                    this.getGamePiece() == other.getGamePiece();
+        }
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getWallet(), getName(), getGamePiece(), getLocation(), getNumber());
     }
 }
