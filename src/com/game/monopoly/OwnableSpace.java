@@ -12,7 +12,7 @@ public abstract class OwnableSpace extends Space{
         setOwned(false);
     }
 
-    class RentContext {
+    protected class RentContext {
         private int diceRoll = 0;
         private int numberOwned = 0;
 
@@ -37,11 +37,11 @@ public abstract class OwnableSpace extends Space{
 
     /**
      * Calculates the rent total owed to a player that owns an own-able space.
-     * @param player
+     * @param owner
      * @param context
      * @return
      */
-    public abstract int rent(Player player, RentContext context);
+    public abstract int rent(Player owner, RentContext context);
 
     /**
      * Sets the new owner name and returns the price.
