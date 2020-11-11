@@ -1,9 +1,9 @@
 package com.game.monopoly;
 
-public class Property extends OwnableSpace{
+public class Property extends OwnableSpace {
     private int rentAmt;
 
-    public Property(String name, int price, int rent){
+    public Property(String name, int price, int rent) {
         super(name, price);
         setRentAmt(rent);
     }
@@ -23,16 +23,13 @@ public class Property extends OwnableSpace{
                 boolean paid = Bank.payForProperty(tenant, this.getPrice());
                 if (paid) {
                     this.setOwner(tenant);
-                }
-                else {
+                } else {
                     // tell player they don't have enough money
                 }
-            }
-            else {
+            } else {
                 // do nothing??
             }
-        }
-        else {
+        } else {
             Player owner = this.getOwner();
             RentContext ctx = new RentContext();
 //            ctx.setDiceRoll(diceRoll);

@@ -1,11 +1,11 @@
 package com.game.monopoly;
 
-public abstract class OwnableSpace extends Space{
+public abstract class OwnableSpace extends Space {
     private Player owner;
     private int price;
     private boolean isOwned;
 
-    public OwnableSpace(String name, int price){
+    public OwnableSpace(String name, int price) {
         super(name);
         owner = null;
         setPrice(price);
@@ -37,6 +37,7 @@ public abstract class OwnableSpace extends Space{
 
     /**
      * Calculates the rent total owed to a player that owns an own-able space.
+     *
      * @param owner
      * @param context
      * @return
@@ -46,7 +47,7 @@ public abstract class OwnableSpace extends Space{
     /**
      * Sets the new owner name and returns the price.
      */
-    public int buy(String name){
+    public int buy(String name) {
         return 0;
     }
 

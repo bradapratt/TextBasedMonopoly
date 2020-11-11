@@ -1,7 +1,7 @@
 package com.game.monopoly;
 
-public class Railroad extends OwnableSpace{
-    public Railroad(String name, int price){
+public class Railroad extends OwnableSpace {
+    public Railroad(String name, int price) {
         super(name, price);
     }
 
@@ -11,6 +11,7 @@ public class Railroad extends OwnableSpace{
      * Two owned - $50
      * Three owned - $100
      * Four owned - $200
+     *
      * @param player
      * @param context
      * @return
@@ -37,16 +38,13 @@ public class Railroad extends OwnableSpace{
                 boolean paid = Bank.payForProperty(tenant, this.getPrice());
                 if (paid) {
                     this.setOwner(tenant);
-                }
-                else {
+                } else {
                     // tell player they don't have enough money
                 }
-            }
-            else {
+            } else {
                 // do nothing??
             }
-        }
-        else {
+        } else {
             Player owner = this.getOwner();
             RentContext ctx = new RentContext();
             ctx.setDiceRoll(diceRoll);
