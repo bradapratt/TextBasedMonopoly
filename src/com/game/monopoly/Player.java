@@ -18,6 +18,7 @@ class Player implements Comparable<Player> {
     private int location;
     private int number;
     private boolean isBankrupt;
+    private boolean passedGo;
     private int numRailRoads;
     private int numUtilities;
 
@@ -35,6 +36,7 @@ class Player implements Comparable<Player> {
         setLocation(FIRST_LOCATION);
         setWallet(1500);
         setBankrupt(false);
+        setPassedGo(false);
         properties = new ArrayList<>();
     }
 
@@ -42,9 +44,14 @@ class Player implements Comparable<Player> {
      * Get dice roll from game, move spaces (update location), return new location to game.
      */
     public int movePlayer(int diceRoll){
+        setPassedGo(false);     //reset flag to false
         setLocation(getLocation() + diceRoll);
         if (getLocation() > LAST_LOCATION){
             setLocation(getLocation() - LAST_LOCATION - 1);
+
+            if (getLocation() != 0){    //set flag to true because you passed go but didn't land on it
+                setPassedGo(true);
+            }
         }
         return getLocation();
     }
@@ -127,6 +134,10 @@ class Player implements Comparable<Player> {
 
     public boolean isBankrupt() { return isBankrupt; }
 
+    public boolean passedGo() {
+        return passedGo;
+    }
+
     public void setWallet(int wallet) {
         this.wallet = wallet;
     }
@@ -170,6 +181,10 @@ class Player implements Comparable<Player> {
             }
         }
         numUtilities = counter;
+    }
+
+    public void setPassedGo(boolean passedGo) {
+        this.passedGo = passedGo;
     }
 
     public int compareTo(Player other) {

@@ -1,12 +1,18 @@
 package com.game.monopoly;
 
+/**
+ * All methods in this class will be static. Message class stores static message methods to be
+ * throughout the text-based Monopoly implementation. It acts as a centralized repository for
+ * all messages printed to the console.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/10/2020
+ */
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-/**
- * All methods in this class will be static. We will add as we go.
- */
+
 class Message {
     /**
      * Creates formatted string to display the current player rankings.
@@ -106,11 +112,10 @@ class Message {
     }
 
     /**
-     * Returns a message stating that input piece was invalid. Prompts user to try again.
-     * @return msg - message
+     * Prints that input piece was invalid. Prompts user to try again.
      */
-    public static String invalidPiece() {
-        return "Not a valid piece name, please try again.\n";
+    public static void invalidPiece() {
+        System.out.println("Not a valid piece name, please try again.");
     }
 
     /**
@@ -191,5 +196,41 @@ class Message {
      */
     public static void dontPlayAgain() {
         System.out.println("Thank you for play Text-Based Monopoly! Goodbye!");
+    }
+
+    /**
+     * Informs player they passed Go.
+     */
+    public static void passGo() {
+        System.out.println("You passed Go. You collect $200.");
+    }
+
+    /**
+     * Informs player they landed on Go.
+     */
+    public static void landedGo() {
+        System.out.println("You landed on Go. You collect $200.");
+    }
+
+    /**
+     * Informs player they landed on Free Parking and the amount they collect.
+     * @param freeParking
+     */
+    public static void freeParking(int freeParking) {
+        System.out.println("You landed on Free Parking. You collect the current Free Parking Fund balance of $" + freeParking);
+    }
+
+    /**
+     * Informs player they landed on Chance.
+     */
+    public static void landedChance() {
+        System.out.println("You landed on Chance. You draw a random card from the pile and it says: ");
+    }
+
+    /**
+     * Informs player they landed on Chance.
+     */
+    public static void landedCommunityChest() {
+        System.out.println("You landed on Community Chest. You draw a random card from the pile and it says: ");
     }
 }

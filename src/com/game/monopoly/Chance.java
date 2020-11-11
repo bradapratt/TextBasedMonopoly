@@ -1,23 +1,39 @@
 package com.game.monopoly;
 
+/**
+ * Class Chance represents the Chance space on a Monopoly board.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/10/2020
+ */
 public class Chance extends RandomCard{
-    public Chance(String name) {
-        super(name);
-    }
-
-    @Override
-    public void execute(Player player, int diceRoll) {
-
-    }
-
-    @Override
-    public void displayMessage() {
+    public Chance() {
+        super("Chance");
     }
 
     /**
-     * Generate random int to choose a "card" (possibly use a switch statement) and
-     * take actions of that card.
+     * Execute actions taken when landing on this space.
+     * @param player - current player
+     * @param diceRoll - current player's dice roll total
      */
-    public void drawCard(){
+    @Override
+    public void execute(Player player, int diceRoll) {
+        displayMessage();
+        drawCard(player, diceRoll);
+    }
+
+    /**
+     * Informs player they landed on Chance.
+     */
+    @Override
+    public void displayMessage() {
+        Message.landedChance();
+    }
+
+    /**
+     * Generate random int to choose a "card" and take actions of that card.
+     */
+    public void drawCard(Player player, int diceRoll){
+        //TODO: use switch statement to pick a card
     }
 }

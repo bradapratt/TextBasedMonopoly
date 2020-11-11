@@ -56,7 +56,7 @@ class Bank {
      * @param player
      * @param amount
      */
-    private static void collect(Player player, int amount) {
+    public static void collect(Player player, int amount) {
         int balance = player.getWallet();
         player.setWallet(balance - amount);
     }
@@ -66,7 +66,7 @@ class Bank {
      * @param player
      * @param amount
      */
-    private static void pay(Player player, int amount){
+    public static void pay(Player player, int amount){
         int balance = player.getWallet();
         player.setWallet(balance + amount);
     }

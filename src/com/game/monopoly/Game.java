@@ -1,7 +1,14 @@
 package com.game.monopoly;
 
+/**
+ * Game class is the controller for a text-based Monopoly board game. It manages all other classes
+ * according to the game rules. It also communicates directly with the players and prompts them
+ * for input.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/10/2020
+ */
 import com.apps.util.Prompter;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -23,23 +30,23 @@ public class Game {
 
 
     /**
-     * Initialize the board;
+     * Initialize the board.
      */
     public Game() {
-        lastPlayerStanding = false;
-        wantsToPlayAgain = false;
+        setLastPlayerStanding(false);
+        setWantsToPlayAgain(false);
         P1 = new Prompter(new Scanner(System.in));
         BOARD = new ArrayList<>();
 
         //load up the board
-        BOARD.add(new Go("Go"));                                            //0
+        BOARD.add(new Go());                                                      //0
         BOARD.add(new Property("Mediterranean Avenue", 60, 2));   //1
-        BOARD.add(new CommunityChest("Community Chest"));                   //2
+        BOARD.add(new CommunityChest());                                          //2
         BOARD.add(new Property("Baltic Avenue", 60, 4));          //3
         BOARD.add(new TaxSpace("Income Tax", 200));                //4
         BOARD.add(new Railroad("Reading Railroad", 200));              //5
         BOARD.add(new Property("Oriental Avenue", 100, 6));       //6
-        BOARD.add(new Chance("Chance"));                                    //7
+        BOARD.add(new Chance());                                                  //7
         BOARD.add(new Property("Vermont Avenue", 100, 6));        //8
         BOARD.add(new Property("Connecticut Avenue", 120, 8));    //9
         //***"Jail" Would Go Here***
@@ -49,12 +56,12 @@ public class Game {
         BOARD.add(new Property("Virginia Avenue", 160, 12));      //13
         BOARD.add(new Railroad("Pennsylvania Railroad", 200));         //14
         BOARD.add(new Property("St. James Place", 180, 14));      //15
-        BOARD.add(new CommunityChest("Community Chest"));                   //16
+        BOARD.add(new CommunityChest());                                          //16
         BOARD.add(new Property("Tennessee", 180, 14));            //17
         BOARD.add(new Property("New York Avenue", 200, 16));      //18
-        BOARD.add(new FreeParking("Free Parking"));                         //19
+        BOARD.add(new FreeParking());                                             //19
         BOARD.add(new Property("Kentucky Avenue", 220, 18));      //20
-        BOARD.add(new Chance("Chance"));                                    //21
+        BOARD.add(new Chance());                                                  //21
         BOARD.add(new Property("Indiana Avenue", 220, 18));       //22
         BOARD.add(new Property("Illinois Avenue", 240, 20));      //23
         BOARD.add(new Railroad("B. & O. Railroad", 200));              //24
@@ -65,10 +72,10 @@ public class Game {
         //***"Go To Jail" Would Go Here
         BOARD.add(new Property("Pacific Avenue", 300, 26));       //29
         BOARD.add(new Property("North Carolina Avenue", 300, 26));//30
-        BOARD.add(new CommunityChest("Community Chest"));                   //31
+        BOARD.add(new CommunityChest());                                          //31
         BOARD.add(new Property("Pennsylvania Avenue", 320, 28));  //32
         BOARD.add(new Railroad("Short Line", 200));                    //33
-        BOARD.add(new Chance("Chance"));                                    //34
+        BOARD.add(new Chance());                                                  //34
         BOARD.add(new Property("Park Place", 350, 35));           //35
         BOARD.add(new TaxSpace("Luxury Tax", 75));                 //36
         BOARD.add(new Property("Boardwalk", 400, 50));            //37
@@ -85,7 +92,7 @@ public class Game {
             startGame();
             endGame();
             playAgain();
-        }while (wantsToPlayAgain);
+        }while (wantsToPlayAgain());
     }
 
     /**
@@ -96,7 +103,7 @@ public class Game {
         inputNumRounds();
         initializePlayers();
 
-        while (checkRoundCount() > 0 && playerList.size() > 1){
+        while (checkRoundCount() > 0 && !isLastPlayerStanding()){
             setCurrentRound(getCurrentRound()+1);
             startRound();
             endRound();
@@ -150,7 +157,7 @@ public class Game {
         bankruptcies = new Stack<>();
         List<String> available = Piece.classToString();
 
-        for (int i = 1; i <= numPlayers; i++){
+        for (int i = 1; i <= getNumPlayers(); i++){
             String name = P1.prompt("Enter the name for Player" + i + ": ");
             boolean notValidPiece = true;
             while (notValidPiece) {
@@ -162,7 +169,7 @@ public class Game {
                     playerList.add(current);
                     notValidPiece = false;
                 }else{
-                    System.out.println(Message.invalidPiece());
+                    Message.invalidPiece();
                 }
             }
         }
@@ -171,8 +178,9 @@ public class Game {
     /**
      * Game will begin each round, and rotate through players' turns.
      */
+    //TODO: transfer properties between players who go bankrupt
     private void startRound(){
-        //for each Player: rollDice() x2, Player.takeTurn()
+        //for each Player: rollDice() x2, takeTurn
         Message.displayRoundCount(getCurrentRound());
 
         for (Player player: playerList){
@@ -180,7 +188,13 @@ public class Game {
             int roll2 = rollDice();
             Message.playerTurn(player, roll1, roll2);
             int newLoc = player.movePlayer((roll1 + roll2));
-            BOARD.get(newLoc).execute(player, (roll1 + roll2));
+
+            if (player.passedGo()) {    //if player passes go, collect $200 BEFORE landing on new space
+                Message.passGo();
+                Bank.pay(player, 200);
+            }
+
+            BOARD.get(newLoc).execute(player, (roll1 + roll2)); //land on new space
 
             if (player.isBankrupt()){
                 bankruptcies.push(player);
@@ -188,7 +202,7 @@ public class Game {
             }
 
             if (playerList.size() == 1){
-                lastPlayerStanding = true;
+                setLastPlayerStanding(true);
                 break;
             }
         }
@@ -210,7 +224,7 @@ public class Game {
         Message.gameOver("endgame.txt", "data");
         Collections.sort(playerList);
 
-        if (lastPlayerStanding){
+        if (isLastPlayerStanding()){
             Message.endGame_lastPlayer(playerList.get(0));
         }else{
             Message.endGame_lastRound(playerList.get(0));
@@ -240,7 +254,7 @@ public class Game {
 
     /**
      * Accessory method for checking number rounds that are left.
-     * @return
+     * @return how close we are to the final round
      */
     private int checkRoundCount(){
         return getNumRounds() - getCurrentRound();
@@ -258,7 +272,7 @@ public class Game {
 
     /**
      * Returns the roll for one six-sided die.
-     * @return
+     * @return the dice roll (1-6)
      */
     private int rollDice(){
         return Dice.rollDice();
