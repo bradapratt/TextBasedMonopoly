@@ -11,6 +11,7 @@ package com.game.monopoly;
 import com.apps.util.Prompter;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game {
     private final static int MIN_ROUNDS = 1;    //minimum # of rounds needed to play
@@ -234,7 +235,9 @@ public class Game {
      */
     private void endGame() throws IOException {
         Message.gameOver("endgame.txt", "data");
-        playerList.stream().sorted(Comparator.comparing(Player::getWallet));
+        List<Player> finalRankings = playerList.stream()
+                .sorted(Comparator.comparing(Player::getWallet).reversed())
+                .collect(Collectors.toList());
 
         if (isLastPlayerStanding()){
             Message.endGame_lastPlayer(playerList.get(0));
@@ -243,9 +246,9 @@ public class Game {
         }
 
         while(!bankruptcies.isEmpty()){
-            playerList.add(bankruptcies.pop());
+            finalRankings.add(bankruptcies.pop());
         }
-        Message.displayFinalRankings(playerList);
+        Message.displayFinalRankings(finalRankings);
         pause(3000);
     }
 
@@ -278,8 +281,9 @@ public class Game {
      * Displays current winner/rankings to console.
      */
     private void displayCurrentRankings(){
-        List<Player> currentRankings = new ArrayList<>(playerList);
-        currentRankings.stream().sorted(Comparator.comparing(Player::getWallet));
+        List<Player> currentRankings = playerList.stream()
+                .sorted(Comparator.comparing(Player::getWallet).reversed())
+                .collect(Collectors.toList());
 
         Message.displayCurrentRankings(currentRankings);
     }
