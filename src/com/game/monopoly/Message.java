@@ -357,7 +357,7 @@ class Message {
     }
 
     public static void landedOnOwned(Player owner, int rent) {
-        System.out.println("This space is owned by " + owner + "!");
+        System.out.println("This space is owned by " + owner.getName() + "!");
         System.out.println("Pay rent of $" + rent + ".");
     }
 
