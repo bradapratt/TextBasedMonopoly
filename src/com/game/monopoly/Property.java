@@ -20,7 +20,7 @@ public class Property extends OwnableSpace {
     }
 
     //**********ACCESSOR METHODS**********
-    public int getRentAmt() {
+    private int getRentAmt() {
         return rentAmt;
     }
 
