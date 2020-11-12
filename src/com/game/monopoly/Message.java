@@ -355,4 +355,13 @@ class Message {
         System.out.println("Win city-wide karaoke contest.");
         System.out.println("You win $300!");
     }
+
+    public static void landedOnOwned(Player owner, int rent) {
+        System.out.println("This space is owned by " + owner + "!");
+        System.out.println("Pay rent of $" + rent + ".");
+    }
+
+    public static void landedOn(String name) {
+        System.out.println("You landed on " + name + ".");
+    }
 }
