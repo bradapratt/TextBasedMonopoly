@@ -1,5 +1,12 @@
 package com.game.monopoly;
 
+/**
+ * Utility represents the two utility spaces on a Monopoly board, Water Works
+ * and Electric Company.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/12/2020
+ */
 public class Utility extends OwnableSpace {
 
     public Utility(String name, int price) {

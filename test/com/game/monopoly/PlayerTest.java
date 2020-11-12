@@ -1,5 +1,11 @@
 package com.game.monopoly;
 
+/**
+ * Test class for Player.java.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/12/2020
+ */
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,7 +13,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 public class PlayerTest {
-
 
     /**
      * Player moves to location

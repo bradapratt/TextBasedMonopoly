@@ -1,10 +1,4 @@
 package com.game.monopoly;
-/**
- * * Player class creates the player and defines the player object.
- *
- * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
- *  Last Edited: 11/11/2020
- */
 
 /**
  * Player simulates the individual players in the Monopoly text-based game. Stores values
@@ -15,7 +9,6 @@ package com.game.monopoly;
  * Last Edited: 11/12/2020
  */
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 

@@ -6,7 +6,7 @@ package com.game.monopoly;
  * for input.
  *
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
- * Last Edited: 11/11/2020
+ * Last Edited: 11/12/2020
  */
 import com.apps.util.Prompter;
 import java.io.IOException;
@@ -60,7 +60,7 @@ public class Game {
         BOARD.add(new Railroad("Pennsylvania Railroad", 200));         //14
         BOARD.add(new Property("St. James Place", 180, 14));      //15
         BOARD.add(new CommunityChest());                                          //16
-        BOARD.add(new Property("Tennessee", 180, 14));            //17
+        BOARD.add(new Property("Tennessee Avenue", 180, 14));     //17
         BOARD.add(new Property("New York Avenue", 200, 16));      //18
         BOARD.add(new FreeParking());                                             //19
         BOARD.add(new Property("Kentucky Avenue", 220, 18));      //20
@@ -240,9 +240,9 @@ public class Game {
                 .collect(Collectors.toList());
 
         if (isLastPlayerStanding()){
-            Message.endGame_lastPlayer(playerList.get(0));
+            Message.endGame_lastPlayer(finalRankings.get(0));
         }else{
-            Message.endGame_lastRound(playerList.get(0));
+            Message.endGame_lastRound(finalRankings.get(0));
         }
 
         while(!bankruptcies.isEmpty()){

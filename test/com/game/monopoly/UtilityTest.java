@@ -1,5 +1,11 @@
 package com.game.monopoly;
 
+/**
+ * Test class for Utility.java.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/12/2020
+ */
 import com.apps.util.Prompter;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,11 +1,16 @@
 package com.game.monopoly;
 
-import com.apps.util.Prompter;
-
+/**
+ * Railroad implements the four railroad spaces on a Monopoly board.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/12/2020
+ */
 public class Railroad extends OwnableSpace {
     public Railroad(String name, int price) {
         super(name, price);
     }
+
 
     /**
      * Railroad rent amount is determined by the number of railroads (RR's) a player owns.
@@ -14,8 +19,8 @@ public class Railroad extends OwnableSpace {
      * Three owned - $100
      * Four owned - $200
      *
-     * @param diceRoll
-     * @return
+     * @param diceRoll - what the current player rolled to land on the railroad
+     * @return resulting rent
      */
     @Override
     public int rent(int diceRoll) {

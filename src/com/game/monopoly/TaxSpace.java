@@ -1,5 +1,12 @@
 package com.game.monopoly;
 
+/**
+ * TaxSpace represents the two tax spaces on a Monopoly board, Income Tax and
+ * Luxury Tax.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/12/2020
+ */
 import com.apps.util.Prompter;
 
 public class TaxSpace extends Space{
