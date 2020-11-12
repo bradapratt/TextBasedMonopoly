@@ -100,7 +100,7 @@ public class Game {
     /**
      * Initializes game values such as number of rounds and players, and executes rounds.
      */
-    void initializeGame(){
+    private void initializeGame(){
         inputNumPlayers(P1);
         inputNumRounds(P1);
         initializePlayers(P1);
@@ -115,7 +115,7 @@ public class Game {
     /**
      * Prompts user for the number of players and sets.
      */
-    void inputNumPlayers(Prompter input){
+    private void inputNumPlayers(Prompter input){
         String numP = input.prompt("Please enter number of players, up to 8: ", "[2-8]", Message.invalidNumPlayers());
         int num = Integer.parseInt(numP);
 
@@ -125,7 +125,7 @@ public class Game {
     /**
      * Prompts user for the number of rounds to be played and sets.
      */
-    void inputNumRounds(Prompter input){
+    private void inputNumRounds(Prompter input){
         boolean isNotValid = true;
         int num = 1;
 
@@ -147,7 +147,7 @@ public class Game {
     /**
      * Create the player objects and initialize all their values.
      */
-    void initializePlayers(Prompter input){
+    private void initializePlayers(Prompter input){
         List<String> available = Piece.classToString();
 
         for (int i = 1; i <= getNumPlayers(); i++){
@@ -197,7 +197,7 @@ public class Game {
      * in rotation.
      * @param player - current player
      */
-    void checkBankruptcy(Player player) {
+    private void checkBankruptcy(Player player) {
         if (player.isBankrupt()){
             bankruptcies.push(player);
             playerList.remove(player);
@@ -208,7 +208,7 @@ public class Game {
      * Pays player for simply passing the "Go" space
      * @param player - current player
      */
-    void passGo(Player player) {
+    private void passGo(Player player) {
         if (player.passedGo()) {    //if player passes go, collect $200 BEFORE landing on new space
             Message.passGo();
             Bank.pay(player, 200);
@@ -246,7 +246,7 @@ public class Game {
     /**
      * Prompts the player if they want to play again and updates the boolean var
      */
-    void playAgain(Prompter input){
+    private void playAgain(Prompter input){
         String again = input.prompt("Would you like to play again? (Y/N) ", "Y|y|N|n", "Please enter Y or N.");
         switch (again){
             case "Y": case "y":
@@ -287,29 +287,29 @@ public class Game {
     }
 
     //***************ACCESSOR METHODS***************
-    int getNumRounds(){
+    private int getNumRounds(){
         return numRounds;
     }
 
-    int getNumPlayers(){
+    private int getNumPlayers(){
         return numPlayers;
     }
 
-    int getCurrentRound(){ return currentRound; }
+    private int getCurrentRound(){ return currentRound; }
 
-    boolean isLastPlayerStanding() {
+    private boolean isLastPlayerStanding() {
         return lastPlayerStanding;
     }
 
-    boolean wantsToPlayAgain() {
+    private boolean wantsToPlayAgain() {
         return wantsToPlayAgain;
     }
 
-    List<Player> getPlayerList() {
+    private List<Player> getPlayerList() {
         return playerList;
     }
 
-    Stack<Player> getBankruptcies() {
+    private Stack<Player> getBankruptcies() {
         return bankruptcies;
     }
 
@@ -321,7 +321,7 @@ public class Game {
         this.currentRound = currentRound;
     }
 
-    void setNumPlayers(int numPlayers) {
+    private void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
     }
 

@@ -242,8 +242,21 @@ class Message {
         System.out.println("You landed on Community Chest. You draw a random card from the pile and it says: ");
     }
 
+    /**
+     * Informs player they do not have enough money they are attempting to buy.
+     * @param name - property name
+     * @param price - property price
+     * @param wallet - amount current player has
+     */
     public static void cantBuyProperty(String name, int price, int wallet) {
         System.out.println("You don't have enough money to buy " + name + ".");
         System.out.println(name + " costs $" + price + ", you have $" + wallet + " in your account.");
+    }
+
+    /**
+     * Informs player of an attempt to add a negative amount to free parking
+     */
+    public static void invalidFreeParkingAmount() {
+        System.out.println("Can't add negative amount to Free Parking. Nothing added to fund.");
     }
 }

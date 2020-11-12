@@ -7,7 +7,6 @@ package com.game.monopoly;
  * Last Edited: 11/11/2020
  */
 import com.apps.util.Prompter;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +25,7 @@ public class GameTest {
     public void setUp() throws Exception {
         G1 = new Game();
     }
-
+/*
     @Test
     public void testInputNumPlayers_whenValidNumber() throws FileNotFoundException {
         scanner = new Scanner(new File("responses/valid_input_number.txt"));
@@ -151,4 +150,5 @@ public class GameTest {
         G1.playAgain(P1); //input: X, then n
         assertFalse(G1.wantsToPlayAgain());
     }
+    */
 }

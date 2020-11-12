@@ -1,13 +1,13 @@
 package com.game.monopoly;
 
-import com.apps.util.Prompter;
-
 /**
  * Class Go represents the "Go" space on a Monopoly board.
  *
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
  * Last Edited: 11/10/2020
  */
+import com.apps.util.Prompter;
+
 public class Go extends Space{
     private static final int GO = 200;
 
@@ -38,7 +38,7 @@ public class Go extends Space{
      * Pays player $200
      * @param passedGo - the player who passed Go
      */
-    public void collectGo(Player passedGo){
+    private void collectGo(Player passedGo){
         Bank.pay(passedGo, GO);
     }
 }

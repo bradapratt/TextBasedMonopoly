@@ -1,13 +1,13 @@
 package com.game.monopoly;
 
-import com.apps.util.Prompter;
-
 /**
  * Class FreeParking represents the free parking space on a Monopoly board.
  *
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
  * Last Edited: 11/10/2020
  */
+import com.apps.util.Prompter;
+
 public class FreeParking extends Space{
     private static final int MIN_VALUE = 0;
     private static int freeParking;
@@ -26,7 +26,6 @@ public class FreeParking extends Space{
     public void execute(Player player, int diceRoll, Prompter input) {
         displayMessage();
         collectFreeParking(player);
-
     }
 
     /**
@@ -41,7 +40,7 @@ public class FreeParking extends Space{
      * Adds current parking fund to player's wallet and resets fund to zero.
      * @param player - current player
      */
-    public static void collectFreeParking(Player player) {
+     private void collectFreeParking(Player player) {
         int balance = player.getWallet();
         player.setWallet(balance + getFreeParking());
         setFreeParking(MIN_VALUE);
@@ -52,7 +51,11 @@ public class FreeParking extends Space{
      * @param amount - amount to be added in dollars
      */
     public static void addToFreeParking(int amount){
-        setFreeParking(getFreeParking() + amount);
+        if (amount >= 0){
+            setFreeParking(getFreeParking() + amount);
+        }else{
+            Message.invalidFreeParkingAmount();
+        }
     }
 
     //**********ACCESSOR METHODS**********
