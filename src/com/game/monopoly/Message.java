@@ -6,7 +6,7 @@ package com.game.monopoly;
  * all messages printed to the console.
  *
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
- * Last Edited: 11/10/2020
+ * Last Edited: 11/11/2020
  */
 import java.io.IOException;
 import java.nio.file.Files;
@@ -258,5 +258,101 @@ class Message {
      */
     public static void invalidFreeParkingAmount() {
         System.out.println("Can't add negative amount to Free Parking. Nothing added to fund.");
+    }
+
+    /**
+     * Displays Community Chest card #1 for the player to read.
+     */
+    public static void CommunityChestCard1() {
+        System.out.println("Bank error in your favor: collect $200.");
+        System.out.println("You collect $200!");
+    }
+
+    /**
+     * Displays Community Chest card #2 for the player to read.
+     */
+    public static void CommunityChestCard2() {
+        System.out.println("Lawyer's fee: pay $50.");
+        System.out.println("You pay $50.");
+    }
+
+    /**
+     * Displays Community Chest card #3 for the player to read.
+     */
+    public static void CommunityChestCard3() {
+        System.out.println("Pay school tax.");
+        System.out.println("You pay $150.");
+    }
+
+    /**
+     * Displays Community Chest card #4 for the player to read.
+     */
+    public static void CommunityChestCard4() {
+        System.out.println("Sell your stock holdings.");
+        System.out.println("You collect $45!");
+    }
+
+    /**
+     * Displays Community Chest card #5 for the player to read.
+     */
+    public static void CommunityChestCard5() {
+        System.out.println("Pay hospital bill.");
+        System.out.println("You pay $100.");
+    }
+
+    /**
+     * Displays Community Chest card #6 for the player to read.
+     */
+    public static void CommunityChestCard6() {
+        System.out.println("Receive inheritance windfall.");
+        System.out.println("You receive $200!");
+    }
+
+    /**
+     * Displays Chance card #1 for the player to read.
+     */
+    public static void ChanceCard1() {
+        System.out.println("Collect monthly rent from your tenants.");
+        System.out.println("You collect $400!");
+    }
+
+    /**
+     * Displays Chance card #2 for the player to read.
+     */
+    public static void ChanceCard2() {
+        System.out.println("Buy lottery tickets...and win nothing.");
+        System.out.println("You lose $35.");
+    }
+
+    /**
+     * Displays Chance card #3 for the player to read.
+     */
+    public static void ChanceCard3() {
+        System.out.println("Invest early in electric car company.");
+        System.out.println("You invest $200.");
+    }
+
+    /**
+     * Displays Chance card #4 for the player to read.
+     */
+    public static void ChanceCard4() {
+        System.out.println("Friend pays back loan...with interest!");
+        System.out.println("You receive $215!");
+    }
+
+    /**
+     * Displays Chance card #5 for the player to read.
+     */
+    public static void ChanceCard5() {
+        System.out.println("Lend friend money.");
+        System.out.println("You lend $100.");
+    }
+
+    /**
+     * Displays Chance card #6 for the player to read.
+     */
+    public static void ChanceCard6() {
+        System.out.println("Win city-wide karaoke contest.");
+        System.out.println("You win $300!");
     }
 }
