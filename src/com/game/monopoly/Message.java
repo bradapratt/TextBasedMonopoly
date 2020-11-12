@@ -93,8 +93,16 @@ class Message {
      * Returns a message stating that input number was invalid. Prompts user to try again.
      * @return msg - message
      */
-    public static String invalidNumber() {
-        return "Not a valid number, please try again.\n";
+    public static String invalidNumPlayers() {
+        return "Number of players must be between 2 and 8. Please try again.\n";
+    }
+
+    /**
+     * Returns a message stating that input number was invalid. Prompts user to try again.
+     * @return msg - message
+     */
+    public static String invalidNumRounds() {
+        return "Number of rounds must be between 1 and 9999. Please try again.\n";
     }
 
     /**
@@ -195,7 +203,7 @@ class Message {
      * Says goodbye to player(s).
      */
     public static void dontPlayAgain() {
-        System.out.println("Thank you for play Text-Based Monopoly! Goodbye!");
+        System.out.println("Thank you for playing Text-Based Monopoly! Goodbye!");
     }
 
     /**

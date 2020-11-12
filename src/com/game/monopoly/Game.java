@@ -6,7 +6,7 @@ package com.game.monopoly;
  * for input.
  *
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
- * Last Edited: 11/10/2020
+ * Last Edited: 11/11/2020
  */
 import com.apps.util.Prompter;
 import java.io.IOException;
@@ -36,6 +36,8 @@ public class Game {
         setLastPlayerStanding(false);
         setWantsToPlayAgain(false);
         P1 = new Prompter(new Scanner(System.in));
+        playerList = new ArrayList<>();
+        bankruptcies = new Stack<>();
         BOARD = new ArrayList<>();
 
         //load up the board
@@ -84,12 +86,12 @@ public class Game {
     /**
      * Send welcome message to console, sends welcome message, runs game iterations.
      */
-    public void setUp() throws IOException {
+    public void startGame() throws IOException {
         Message.banner("banner.txt", "data");
         Message.welcome();
 
         do {
-            startGame();
+            initializeGame();
             endGame();
             playAgain(P1);
         }while (wantsToPlayAgain());
@@ -98,7 +100,7 @@ public class Game {
     /**
      * Initializes game values such as number of rounds and players, and executes rounds.
      */
-    public void startGame(){
+    void initializeGame(){
         inputNumPlayers(P1);
         inputNumRounds(P1);
         initializePlayers(P1);
@@ -113,38 +115,31 @@ public class Game {
     /**
      * Prompts user for the number of players and sets.
      */
-    private void inputNumPlayers(Prompter input){
-        boolean isNotValid = true;
-        int num = 0;
+    void inputNumPlayers(Prompter input){
+        String numP = input.prompt("Please enter number of players, up to 8: ", "[2-8]", Message.invalidNumPlayers());
+        int num = Integer.parseInt(numP);
 
-        while (isNotValid){
-            String numP = input.prompt("Please enter number of players, up to 8: ", "\\d", Message.invalidNumber());
-            num = Integer.parseInt(numP);
-            if (num < MIN_PLAYERS || num > MAX_PLAYERS){
-                System.out.println("Number of players must be between 2 and 8. Please try again.");
-            }else{
-                isNotValid = false;
-            }
-        }
         setNumPlayers(num);
     }
 
     /**
      * Prompts user for the number of rounds to be played and sets.
      */
-    private void inputNumRounds(Prompter input){
+    void inputNumRounds(Prompter input){
         boolean isNotValid = true;
-        int num = 0;
+        int num = 1;
 
         while (isNotValid){
-            String numR = input.prompt("Please enter number of desired rounds: ", "\\d+", Message.invalidNumber());
+            String numR = input.prompt("Please enter number of desired rounds: ", "\\d{1,4}+", Message.invalidNumRounds());
             num = Integer.parseInt(numR);
-            if (num >= MIN_ROUNDS){
-                isNotValid = false;
+
+            if (num < 1){
+                System.out.println(Message.invalidNumRounds());
             }else{
-                System.out.println("Number of rounds must be greater than 0. Please try again.");
+                isNotValid = false;
             }
         }
+
         setNumRounds(num);
         setCurrentRound(0);
     }
@@ -152,9 +147,7 @@ public class Game {
     /**
      * Create the player objects and initialize all their values.
      */
-    private void initializePlayers(Prompter input){
-        playerList = new ArrayList<>();
-        bankruptcies = new Stack<>();
+    void initializePlayers(Prompter input){
         List<String> available = Piece.classToString();
 
         for (int i = 1; i <= getNumPlayers(); i++){
@@ -178,7 +171,6 @@ public class Game {
     /**
      * Game will begin each round, and rotate through players' turns.
      */
-    //TODO: transfer properties between players who go bankrupt
     private void startRound(){
         //for each Player: rollDice() x2, takeTurn
         Message.displayRoundCount(getCurrentRound());
@@ -189,22 +181,37 @@ public class Game {
             Message.playerTurn(player, roll1, roll2);
             int newLoc = player.movePlayer((roll1 + roll2));
 
-            if (player.passedGo()) {    //if player passes go, collect $200 BEFORE landing on new space
-                Message.passGo();
-                Bank.pay(player, 200);
-            }
-
+            passGo(player);
             BOARD.get(newLoc).execute(player, (roll1 + roll2), P1); //land on new space
-
-            if (player.isBankrupt()){
-                bankruptcies.push(player);
-                playerList.remove(player);
-            }
+            checkBankruptcy(player);
 
             if (playerList.size() == 1){
                 setLastPlayerStanding(true);
                 break;
             }
+        }
+    }
+
+    /**
+     * Checks if player is bankrupt and moves them to the bankruptcy list so they are no longer
+     * in rotation.
+     * @param player - current player
+     */
+    void checkBankruptcy(Player player) {
+        if (player.isBankrupt()){
+            bankruptcies.push(player);
+            playerList.remove(player);
+        }
+    }
+
+    /**
+     * Pays player for simply passing the "Go" space
+     * @param player - current player
+     */
+    void passGo(Player player) {
+        if (player.passedGo()) {    //if player passes go, collect $200 BEFORE landing on new space
+            Message.passGo();
+            Bank.pay(player, 200);
         }
     }
 
@@ -239,15 +246,17 @@ public class Game {
     /**
      * Prompts the player if they want to play again and updates the boolean var
      */
-    private void playAgain(Prompter input){
-        String again = input.prompt("Would you like to play again? (Y/N)", "Y|y|N|n", "Please enter Y or N.");
+    void playAgain(Prompter input){
+        String again = input.prompt("Would you like to play again? (Y/N) ", "Y|y|N|n", "Please enter Y or N.");
         switch (again){
             case "Y": case "y":
                 setWantsToPlayAgain(true);
                 Message.playAgain();
+                break;
             case "N": case "n":
                 setWantsToPlayAgain(false);
                 Message.dontPlayAgain();
+                break;
         }
     }
 
@@ -278,22 +287,30 @@ public class Game {
     }
 
     //***************ACCESSOR METHODS***************
-    private int getNumRounds(){
+    int getNumRounds(){
         return numRounds;
     }
 
-    private int getNumPlayers(){
+    int getNumPlayers(){
         return numPlayers;
     }
 
-    private int getCurrentRound(){ return currentRound; }
+    int getCurrentRound(){ return currentRound; }
 
-    private boolean isLastPlayerStanding() {
+    boolean isLastPlayerStanding() {
         return lastPlayerStanding;
     }
 
-    private boolean wantsToPlayAgain() {
+    boolean wantsToPlayAgain() {
         return wantsToPlayAgain;
+    }
+
+    List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    Stack<Player> getBankruptcies() {
+        return bankruptcies;
     }
 
     private void setNumRounds(int numRounds) {
@@ -304,7 +321,7 @@ public class Game {
         this.currentRound = currentRound;
     }
 
-    private void setNumPlayers(int numPlayers) {
+    void setNumPlayers(int numPlayers) {
         this.numPlayers = numPlayers;
     }
 
