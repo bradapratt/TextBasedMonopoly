@@ -11,6 +11,7 @@ package com.game.monopoly;
 import com.apps.util.Prompter;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Game {
     private final static int MIN_ROUNDS = 1;    //minimum # of rounds needed to play
@@ -89,6 +90,7 @@ public class Game {
     public void startGame() throws IOException {
         Message.banner("banner.txt", "data");
         Message.welcome();
+        pause(1000);
 
         do {
             initializeGame();
@@ -174,6 +176,7 @@ public class Game {
     private void startRound(){
         //for each Player: rollDice() x2, takeTurn
         Message.displayRoundCount(getCurrentRound());
+        pause(3000);
 
         for (Player player: playerList){
             int roll1 = rollDice();
@@ -183,12 +186,14 @@ public class Game {
 
             passGo(player);
             BOARD.get(newLoc).execute(player, (roll1 + roll2), P1); //land on new space
+            System.out.println();
             checkBankruptcy(player);
 
             if (playerList.size() == 1){
                 setLastPlayerStanding(true);
                 break;
             }
+            pause(3000);
         }
     }
 
@@ -222,6 +227,7 @@ public class Game {
         Message.endOfRound(getCurrentRound());
         displayCurrentRankings();
         Message.remainingRounds(checkRoundCount());
+        pause(3000);
     }
 
     /**
@@ -229,7 +235,9 @@ public class Game {
      */
     private void endGame() throws IOException {
         Message.gameOver("endgame.txt", "data");
-        playerList.stream().sorted(Comparator.comparing(Player::getWallet));
+        List<Player> finalRankings = playerList.stream()
+                .sorted(Comparator.comparing(Player::getWallet).reversed())
+                .collect(Collectors.toList());
 
         if (isLastPlayerStanding()){
             Message.endGame_lastPlayer(playerList.get(0));
@@ -238,9 +246,10 @@ public class Game {
         }
 
         while(!bankruptcies.isEmpty()){
-            playerList.add(bankruptcies.pop());
+            finalRankings.add(bankruptcies.pop());
         }
-        Message.displayFinalRankings(playerList);
+        Message.displayFinalRankings(finalRankings);
+        pause(3000);
     }
 
     /**
@@ -272,8 +281,9 @@ public class Game {
      * Displays current winner/rankings to console.
      */
     private void displayCurrentRankings(){
-        List<Player> currentRankings = new ArrayList<>(playerList);
-        currentRankings.stream().sorted(Comparator.comparing(Player::getWallet));
+        List<Player> currentRankings = playerList.stream()
+                .sorted(Comparator.comparing(Player::getWallet).reversed())
+                .collect(Collectors.toList());
 
         Message.displayCurrentRankings(currentRankings);
     }
@@ -284,6 +294,18 @@ public class Game {
      */
     private int rollDice(){
         return Dice.rollDice();
+    }
+
+    /**
+     * Pauses program for a period of time passed in. Improves readability for players.
+     * @param pauseTime - amount of time to be paused, in milliseconds
+     */
+    private void pause(int pauseTime){
+        try{
+            Thread.sleep(pauseTime);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     //***************ACCESSOR METHODS***************

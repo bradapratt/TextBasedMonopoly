@@ -11,18 +11,20 @@ public class Utility extends OwnableSpace {
      * One owned - 4x the amount shown on dice
      * Both owned - 10x the amount shown on dice
      *
-     * @param owner
      * @param diceRoll
      * @return
      */
     @Override
-    public int rent(Player owner, int diceRoll) {
-        int result = switch (owner.getNumUtilities()) {
+    public int rent(int diceRoll) {
+        int result = switch (getOwner().getNumUtilities()) {
             case 1 -> 4 * diceRoll;
             case 2 -> 10 * diceRoll;
 
             default -> throw new IllegalStateException("Unexpected value: " + diceRoll);
         };
+        Message.landedOnOwned_Owner(getOwner());
+        Message.numUtilitiesOwned(getOwner().getName(), getOwner().getNumUtilities());
+        Message.landedOnOwned_Rent(result);
         return result;
     }
 

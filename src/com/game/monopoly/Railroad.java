@@ -14,20 +14,22 @@ public class Railroad extends OwnableSpace {
      * Three owned - $100
      * Four owned - $200
      *
-     * @param player
      * @param diceRoll
      * @return
      */
     @Override
-    public int rent(Player player, int diceRoll) {
-        int result = switch (player.getNumRailRoads()) {
+    public int rent(int diceRoll) {
+        int result = switch (getOwner().getNumRailRoads()) {
             case 1 -> 25;
             case 2 -> 50;
             case 3 -> 100;
             case 4 -> 200;
 
-            default -> throw new IllegalStateException("Unexpected value: " + player.getNumRailRoads());
+            default -> throw new IllegalStateException("Unexpected value: " + getOwner().getNumRailRoads());
         };
+        Message.landedOnOwned_Owner(getOwner());
+        Message.numRailroadsOwned(getOwner().getName(), getOwner().getNumRailRoads());
+        Message.landedOnOwned_Rent(result);
         return result;
     }
 
