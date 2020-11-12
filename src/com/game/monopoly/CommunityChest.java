@@ -1,14 +1,17 @@
 package com.game.monopoly;
 
-import com.apps.util.Prompter;
-
 /**
  * Class CommunityChest represents the Community Chest space on a Monopoly Board.
  *
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
- * Last Edited: 11/10/2020
+ * Last Edited: 11/11/2020
  */
+import com.apps.util.Prompter;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class CommunityChest extends RandomCard{
+    private static final int MIN = 1;
+    private static final int MAX = 6;
     public CommunityChest() {
         super("Chance");
     }
@@ -36,6 +39,26 @@ public class CommunityChest extends RandomCard{
      * Generate random int to choose a "card" and take actions of that card.
      */
     public void drawCard(Player player, int diceRoll){
-        //TODO: Use a switch statement to pick a random card
+        int rand = ThreadLocalRandom.current().nextInt(MIN, MAX + 1);
+        switch (rand){
+            case 1:
+                Message.CommunityChestCard1();
+                Bank.pay(player, 200);
+            case 2:
+                Message.CommunityChestCard2();
+                Bank.collect(player, 50);
+            case 3:
+                Message.CommunityChestCard3();
+                Bank.collect(player, 150);
+            case 4:
+                Message.CommunityChestCard4();
+                Bank.pay(player, 45);
+            case 5:
+                Message.CommunityChestCard5();
+                Bank.collect(player, 100);
+            case 6:
+                Message.CommunityChestCard6();
+                Bank.pay(player, 200);
+        }
     }
 }
