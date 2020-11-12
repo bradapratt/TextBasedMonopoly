@@ -123,7 +123,7 @@ class Player {
     /**
      * Sets owner of all properties to null (no current owner)
      */
-    private void clearOwner(){
+    public void clearOwner(){
         for (OwnableSpace property: properties){
             property.setOwned(false);
             property.setOwner(null);
@@ -137,6 +137,7 @@ class Player {
     public void transferOwner(Player newOwner){
         for (OwnableSpace property: properties){
             property.setOwner(newOwner);
+            newOwner.addProperty(property);
         }
     }
 
