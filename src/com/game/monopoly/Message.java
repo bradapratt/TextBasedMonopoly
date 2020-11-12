@@ -368,4 +368,8 @@ class Message {
     public static void showPlayerBalance(String name, int wallet) {
         System.out.println(name + " you have $" + wallet + " in your account.");
     }
+
+    public static void oweTax(Player tenant, int taxAmount) {
+        System.out.println(tenant.getName() + " you owe taxes of $" + taxAmount + ".");
+    }
 }
