@@ -25,6 +25,7 @@ public abstract class OwnableSpace extends Space {
         displayMessage();
         if (!this.isOwned()) {
             // ask player if they want to buy it
+            Message.showPlayerBalance(tenant.getName(), tenant.getWallet());
             String buy = input.prompt("Would you like to buy this property? " +
                     "(Y/N)", "Y|y|N|n", "Please enter Y or N.");
             switch (buy) {

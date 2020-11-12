@@ -364,4 +364,8 @@ class Message {
     public static void landedOn(String name) {
         System.out.println("You landed on " + name + ".");
     }
+
+    public static void showPlayerBalance(String name, int wallet) {
+        System.out.println(name + " you have $" + wallet + " in your account.");
+    }
 }
