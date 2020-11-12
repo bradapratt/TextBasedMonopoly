@@ -86,7 +86,7 @@ class Bank {
 
     private static boolean hasEnoughCash(Player player, int amount) {
         boolean result = false;
-        if ((player.getWallet() - amount) >= amount || player.getWallet() == amount) {
+        if (player.getWallet() >= amount) {
             result = true;
         }
         return result;

@@ -356,8 +356,11 @@ class Message {
         System.out.println("You win $300!");
     }
 
-    public static void landedOnOwned(Player owner, int rent) {
+    public static void landedOnOwned_Owner(Player owner) {
         System.out.println("This space is owned by " + owner.getName() + "!");
+    }
+
+    public static void landedOnOwned_Rent(int rent) {
         System.out.println("Pay rent of $" + rent + ".");
     }
 
@@ -380,5 +383,40 @@ class Message {
 
     public static void oweTax(Player tenant, int taxAmount) {
         System.out.println(tenant.getName() + " you owe taxes of $" + taxAmount + ".");
+    }
+
+    /**
+     * Notifies player of bankruptcy.
+     * @param name - player going bankrupt
+     */
+    public static void playerWentBankrupt(String name) {
+        System.out.println("Uh oh! " + name + " went bankrupt. All their assets were liquidated.");
+    }
+
+    /**
+     * Notifies player of bankruptcy
+     * @param name - player going bankrupt
+     * @param debtHolder - player gaining all of bankrupt player's assets
+     */
+    public static void playerWentBankruptToAnother(String name, String debtHolder) {
+        System.out.println("Uh oh! " + name + " went bankrupt. All their assets were transferred to " + debtHolder + ".");
+    }
+
+    /**
+     * Informs player how many utilites the current owner owns.
+     * @param name - name of current owner
+     * @param numUtilities - number of utilities they own total (max 2)
+     */
+    public static void numUtilitiesOwned(String name, int numUtilities) {
+        System.out.println(name + " currently owns " + numUtilities + " utilities.");
+    }
+
+    /**
+     * Informs player how many railroads the current owner owns.
+     * @param name - name of current owner
+     * @param numRailroads - number of railroads they own total (max 4)
+     */
+    public static void numRailroadsOwned(String name, int numRailroads) {
+        System.out.println(name + " currently owns " + numRailroads + " railroads.");
     }
 }

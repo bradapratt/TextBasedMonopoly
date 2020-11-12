@@ -43,8 +43,7 @@ public abstract class OwnableSpace extends Space {
             }
         } else {
             Player owner = this.getOwner();
-            int rent = this.rent(owner, diceRoll);
-            Message.landedOnOwned(owner, rent);
+            int rent = this.rent(diceRoll);
             Bank.payRent(tenant, owner, rent);
         }
     }
@@ -52,11 +51,10 @@ public abstract class OwnableSpace extends Space {
     /**
      * Calculates the rent total owed to a player that owns an own-able space.
      *
-     * @param owner
      * @param diceRoll
      * @return
      */
-    public abstract int rent(Player owner, int diceRoll);
+    public abstract int rent(int diceRoll);
 
     /**
      * Sets the new owner name and returns the price.

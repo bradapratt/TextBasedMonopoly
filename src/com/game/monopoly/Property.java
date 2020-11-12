@@ -9,8 +9,10 @@ public class Property extends OwnableSpace {
     }
 
     @Override
-    public int rent(Player player, int diceRoll) {
+    public int rent(int diceRoll) {
         // TODO rent is doubled if a player has a monopoly (all lots in a color-group)
+        Message.landedOnOwned_Owner(getOwner());
+        Message.landedOnOwned_Rent(getRentAmt());
         return getRentAmt();
     }
 

@@ -89,6 +89,7 @@ public class Game {
     public void startGame() throws IOException {
         Message.banner("banner.txt", "data");
         Message.welcome();
+        pause(1000);
 
         do {
             initializeGame();
@@ -174,6 +175,7 @@ public class Game {
     private void startRound(){
         //for each Player: rollDice() x2, takeTurn
         Message.displayRoundCount(getCurrentRound());
+        pause(3000);
 
         for (Player player: playerList){
             int roll1 = rollDice();
@@ -183,12 +185,14 @@ public class Game {
 
             passGo(player);
             BOARD.get(newLoc).execute(player, (roll1 + roll2), P1); //land on new space
+            System.out.println();
             checkBankruptcy(player);
 
             if (playerList.size() == 1){
                 setLastPlayerStanding(true);
                 break;
             }
+            pause(3000);
         }
     }
 
@@ -222,6 +226,7 @@ public class Game {
         Message.endOfRound(getCurrentRound());
         displayCurrentRankings();
         Message.remainingRounds(checkRoundCount());
+        pause(3000);
     }
 
     /**
@@ -241,6 +246,7 @@ public class Game {
             playerList.add(bankruptcies.pop());
         }
         Message.displayFinalRankings(playerList);
+        pause(3000);
     }
 
     /**
@@ -284,6 +290,18 @@ public class Game {
      */
     private int rollDice(){
         return Dice.rollDice();
+    }
+
+    /**
+     * Pauses program for a period of time passed in. Improves readability for players.
+     * @param pauseTime - amount of time to be paused, in milliseconds
+     */
+    private void pause(int pauseTime){
+        try{
+            Thread.sleep(pauseTime);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     //***************ACCESSOR METHODS***************
