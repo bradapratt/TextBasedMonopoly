@@ -1,4 +1,10 @@
 package com.game.monopoly;
+/**
+ * * Player class creates the player and defines the player object.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ *  Last Edited: 11/11/2020
+ */
 
 /**
  * Player simulates the individual players in the Monopoly text-based game. Stores values
@@ -128,7 +134,7 @@ class Player {
      * Sets owner of all properties to the new owner (debt holder)
      * @param newOwner - person current player owes money to (and can't pay full amount)
      */
-    private void transferOwner(Player newOwner){
+    public void transferOwner(Player newOwner){
         for (OwnableSpace property: properties){
             property.setOwner(newOwner);
         }
@@ -155,7 +161,7 @@ class Player {
         return gamePiece;
     }
 
-    private int getLocation() {
+    public int getLocation() {
         return location;
     }
 
@@ -171,7 +177,7 @@ class Player {
         return passedGo;
     }
 
-    private List<OwnableSpace> getProperties() {
+    public List<OwnableSpace> getProperties() {
         return properties;
     }
 
@@ -187,7 +193,7 @@ class Player {
         this.gamePiece = gamePiece;
     }
 
-    private void setLocation(int location) {
+    public void setLocation(int location) {
         this.location = location;
     }
 
