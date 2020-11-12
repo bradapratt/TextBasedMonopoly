@@ -43,7 +43,9 @@ public abstract class OwnableSpace extends Space {
             }
         } else {
             Player owner = this.getOwner();
-            Bank.payRent(tenant, owner, this.rent(owner, diceRoll));
+            int rent = this.rent(owner, diceRoll);
+            Message.landedOnOwned(owner, rent);
+            Bank.payRent(tenant, owner, rent);
         }
     }
 

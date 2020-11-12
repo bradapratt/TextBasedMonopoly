@@ -1,7 +1,5 @@
 package com.game.monopoly;
 
-import com.apps.util.Prompter;
-
 public class Property extends OwnableSpace {
     private int rentAmt;
 
@@ -18,6 +16,7 @@ public class Property extends OwnableSpace {
 
     @Override
     public void displayMessage() {
+        Message.landedOn(this.getName());
     }
 
     //**********ACCESSOR METHODS**********

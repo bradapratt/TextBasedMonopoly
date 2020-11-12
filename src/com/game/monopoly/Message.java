@@ -259,4 +259,13 @@ class Message {
     public static void invalidFreeParkingAmount() {
         System.out.println("Can't add negative amount to Free Parking. Nothing added to fund.");
     }
+
+    public static void landedOn(String name) {
+        System.out.println("You landed on " + name + ".");
+    }
+
+    public static void landedOnOwned(Player owner, int rent) {
+        System.out.println("This space is owned by " + owner.getName() + ".");
+        System.out.println("Pay rent of $" + rent + ".");
+    }
 }
