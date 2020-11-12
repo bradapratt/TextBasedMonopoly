@@ -12,18 +12,16 @@ public class TaxSpace extends Space{
 
     @Override
     public void execute(Player player, int diceRoll, Prompter input) {
-
+        displayMessage();
+        Bank.payIntoFreeParking(player, this.getTaxAmount());
     }
 
     @Override
     public void displayMessage() {
+        Message.landedOn(this.getName());
     }
 
     public int getTaxAmount() {
         return taxAmount;
-    }
-
-    public void setTaxAmount(int taxAmount) {
-        this.taxAmount = taxAmount;
     }
 }

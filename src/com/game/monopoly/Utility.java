@@ -1,7 +1,5 @@
 package com.game.monopoly;
 
-import com.apps.util.Prompter;
-
 public class Utility extends OwnableSpace {
 
     public Utility(String name, int price) {

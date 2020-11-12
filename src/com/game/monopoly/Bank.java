@@ -52,6 +52,8 @@ class Bank {
         if (hasEnoughCash(player, tax)) {
             collect(player, tax);
             FreeParking.addToFreeParking(tax);
+        } else {
+            player.declareBankruptcy();
         }
     }
 
@@ -62,8 +64,12 @@ class Bank {
      * @param amount
      */
     public static void collect(Player player, int amount) {
-        int balance = player.getWallet();
-        player.setWallet(balance - amount);
+        if (hasEnoughCash(player, amount)) {
+            int balance = player.getWallet();
+            player.setWallet(balance - amount);
+        } else {
+            player.declareBankruptcy();
+        }
     }
 
     /**
