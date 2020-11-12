@@ -377,4 +377,8 @@ class Message {
     public static String promptBuyProperty(int price) {
         return "Would you like to buy this property? It costs $" + price + " (Y/N)";
     }
+
+    public static void oweTax(Player tenant, int taxAmount) {
+        System.out.println(tenant.getName() + " you owe taxes of $" + taxAmount + ".");
+    }
 }

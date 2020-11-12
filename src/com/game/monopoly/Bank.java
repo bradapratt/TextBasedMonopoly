@@ -53,6 +53,7 @@ class Bank {
             collect(player, tax);
             FreeParking.addToFreeParking(tax);
         } else {
+            FreeParking.addToFreeParking(player.getWallet());
             player.declareBankruptcy();
         }
     }

@@ -1,7 +1,11 @@
 package com.game.monopoly;
 
+import com.apps.util.Prompter;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.util.Scanner;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +13,8 @@ public class BankTest {
     private Player p1;
     private Player p2;
     private Property prop1;
+    private TaxSpace tax1;
+    private FreeParking park;
 
     @Before
     public void setUp() {
@@ -17,6 +23,8 @@ public class BankTest {
         p1.setWallet(1500);
         p2.setWallet(1500);
         prop1 = new Property("Atlantic Avenue", 260, 22);
+        tax1 = new TaxSpace("Income Tax", 200);
+        park = new FreeParking();
     }
 
     @Test
@@ -70,7 +78,12 @@ public class BankTest {
     }
 
     @Test
-    public void testPayIntoFreeParking() {
-        // TODO
+    public void testPayIntoFreeParking() throws Exception {
+        Prompter input = new Prompter(new Scanner(new File("responses/responses.txt")));
+        tax1.execute(p1, 5, input);
+
+        assertEquals(1300, p1.getWallet());
+//        assertEquals(200, FreeParking.getFreeParking());
+
     }
 }
