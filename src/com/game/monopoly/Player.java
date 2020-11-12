@@ -133,8 +133,6 @@ class Player {
         return properties;
     }
 
-
-
     //**********ACCESSOR METHODS**********
     public int getNumRailRoads() {
         return numRailRoads;

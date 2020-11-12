@@ -35,6 +35,7 @@ public class UtilityTest {
         assertTrue(prop1.isOwned());
         assertTrue(p1.equals(prop1.getOwner()));
         assertEquals(1472, p2.getWallet());
+//        assertTrue(p1.getProperties().contains(prop1));
     }
 
     @Test
@@ -51,9 +52,7 @@ public class UtilityTest {
         assertTrue(p1.equals(prop2.getOwner()));
         assertTrue(p1.equals(prop1.getOwner()));
         assertEquals(1310, p2.getWallet());
-    }
-
-    @Test
-    public void execute() {
+//        assertTrue(p1.getProperties().contains(prop1));
+//        assertTrue(p1.getProperties().contains(prop2));
     }
 }
