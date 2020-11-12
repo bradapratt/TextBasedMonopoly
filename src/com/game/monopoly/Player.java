@@ -1,5 +1,13 @@
 package com.game.monopoly;
 
+/**
+ * Player simulates the individual players in the Monopoly text-based game. Stores values
+ * such as their current cash reserve (wallet), their location on the board, their chosen
+ * game piece, and the list of properties they own.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/12/2020
+ */
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,8 +35,9 @@ class Player {
     /**
      * Constructor: initial values, wallet = 1500, properties = {}, location = 0
      *
-     * @param name
-     * @param gamePiece
+     * @param name - name of player
+     * @param gamePiece - Their chosen piece
+     * @param num - number assigned by Game
      */
     public Player(String name, Piece gamePiece, int num) {
         setName(name);
@@ -50,7 +59,8 @@ class Player {
         if (getLocation() > LAST_LOCATION) {
             setLocation(getLocation() - LAST_LOCATION - 1);
 
-            if (getLocation() != 0) {    //set flag to true because you passed go but didn't land on it
+            //set flag to true because you passed go but didn't land on it
+            if (getLocation() != 0) {
                 setPassedGo(true);
             }
         }
@@ -58,9 +68,9 @@ class Player {
     }
 
     /**
-     * Bought a new property, need add a copy to the property list for tracking.
+     * Adds new property purchased by player to the property list
      *
-     * @param newProperty
+     * @param newProperty - new property that was purchased
      */
     public void addProperty(OwnableSpace newProperty) {
         properties.add(newProperty);
@@ -69,20 +79,19 @@ class Player {
     }
 
     /**
-     * Sold or lost a property, need to remove it from property list.
+     * Removes a property that was sold from the property list.
      *
-     * @param propertyName
+     * @param soldProperty - name of the property to be removed
      */
-    public void removeProperty(String propertyName) {
-        properties.remove(propertyName);
+    public void removeProperty(OwnableSpace soldProperty) {
+        properties.remove(soldProperty);
         setNumRailRoads();
         setNumUtilities();
     }
 
     /**
-     * If current player owes money to the bank.
      * Sets bankrupt flag, empties wallet, sets all property ownership to null, and clears out
-     * list of properties.
+     * list of properties (If current player owes money to the bank).
      */
     public void declareBankruptcy() {
         isBankrupt = true;
@@ -92,9 +101,10 @@ class Player {
     }
 
     /**
-     * If current player owes money to another player.
      * Sets bankrupt flag, pays the debt holder the remainder of current player's wallet, transfers
-     * property ownership, and then clears out list of properties.
+     * property ownership, and then clears out list of properties (If current player owes money to
+     * another player).
+     *
      * @param debtHolder - person that current player owes money to (and can't pay full amount)
      */
     public void declareBankruptcy(Player debtHolder){
@@ -122,15 +132,6 @@ class Player {
         for (OwnableSpace property: properties){
             property.setOwner(newOwner);
         }
-    }
-
-    /**
-     * Return property list to Game so they can reset owners/ transfer, before declaring bankruptcy.
-     *
-     * @return
-     */
-    private List<OwnableSpace> getProperties() {
-        return properties;
     }
 
     //**********ACCESSOR METHODS**********
@@ -168,6 +169,10 @@ class Player {
 
     public boolean passedGo() {
         return passedGo;
+    }
+
+    private List<OwnableSpace> getProperties() {
+        return properties;
     }
 
     public void setWallet(int wallet) {
