@@ -44,21 +44,27 @@ public class Chance extends RandomCard{
             case 1:
                 Message.ChanceCard1();
                 Bank.pay(player, 400);
+                break;
             case 2:
                 Message.ChanceCard2();
                 Bank.collect(player, 35);
+                break;
             case 3:
                 Message.ChanceCard3();
                 Bank.collect(player, 200);
+                break;
             case 4:
                 Message.ChanceCard4();
                 Bank.pay(player, 215);
+                break;
             case 5:
                 Message.ChanceCard5();
                 Bank.collect(player, 100);
+                break;
             case 6:
                 Message.ChanceCard6();
                 Bank.pay(player, 300);
+                break;
         }
     }
 }

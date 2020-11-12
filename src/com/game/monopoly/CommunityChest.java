@@ -44,21 +44,27 @@ public class CommunityChest extends RandomCard{
             case 1:
                 Message.CommunityChestCard1();
                 Bank.pay(player, 200);
+                break;
             case 2:
                 Message.CommunityChestCard2();
                 Bank.collect(player, 50);
+                break;
             case 3:
                 Message.CommunityChestCard3();
                 Bank.collect(player, 150);
+                break;
             case 4:
                 Message.CommunityChestCard4();
                 Bank.pay(player, 45);
+                break;
             case 5:
                 Message.CommunityChestCard5();
                 Bank.collect(player, 100);
+                break;
             case 6:
                 Message.CommunityChestCard6();
                 Bank.pay(player, 200);
+                break;
         }
     }
 }

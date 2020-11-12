@@ -368,4 +368,13 @@ class Message {
     public static void showPlayerBalance(String name, int wallet) {
         System.out.println(name + " you have $" + wallet + " in your account.");
     }
+
+    /**
+     * Asks player if they want to buy a property and displays the price.
+     * @param price - price of the property
+     * @return - String with prompt
+     */
+    public static String promptBuyProperty(int price) {
+        return "Would you like to buy this property? It costs $" + price + " (Y/N)";
+    }
 }
