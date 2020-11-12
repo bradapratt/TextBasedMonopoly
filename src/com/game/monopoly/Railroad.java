@@ -33,5 +33,6 @@ public class Railroad extends OwnableSpace {
 
     @Override
     public void displayMessage() {
+        Message.landedOn(this.getName());
     }
 }

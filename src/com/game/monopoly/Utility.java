@@ -30,5 +30,6 @@ public class Utility extends OwnableSpace {
 
     @Override
     public void displayMessage() {
+        Message.landedOn(this.getName());
     }
 }
