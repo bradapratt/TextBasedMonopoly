@@ -78,7 +78,7 @@ public class BankTest {
     }
 
     @Test
-    public void testPayIntoFreeParking() throws Exception {
+    public void testPayTaxIntoFreeParking() throws Exception {
         Prompter input = new Prompter(new Scanner(new File("responses/responses.txt")));
         tax1.execute(p1, 5, input);
 
