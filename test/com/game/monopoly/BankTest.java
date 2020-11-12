@@ -43,7 +43,8 @@ public class BankTest {
 
     @Test
     public void testPayRentToPlayerTwoWithPlayerOneEnoughMoney() {
-        //assertTrue(Bank.payRent(p1, p2, prop1.getRentAmt()));
+        int rent = prop1.rent(p1, 6);
+        Bank.payRent(p1, p2, rent);
         assertEquals(1478, p1.getWallet());
         assertEquals(1522, p2.getWallet());
     }
@@ -51,17 +52,19 @@ public class BankTest {
     @Test
     public void testPayRentToPlayerTwoWithPlayerOneNotEnoughMoney() {
         p1.setWallet(20);
+        int rent = prop1.rent(p1, 5);
+        Bank.payRent(p1, p2, rent);
 
-        //assertFalse(Bank.payRent(p1, p2, prop1.getRentAmt()));
-        assertEquals(20, p1.getWallet());
-        assertEquals(1500, p2.getWallet());
+        assertEquals(0, p1.getWallet());
+        assertTrue(p1.isBankrupt());
     }
 
     @Test
     public void testPayRentToPlayerTwoWithPlayerOneEqualMoney() {
         p1.setWallet(22);
+        int rent = prop1.rent(p1, 4);
+        Bank.payRent(p1, p2, rent);
 
-        //assertTrue(Bank.payRent(p1, p2, prop1.getRentAmt()));
         assertEquals(0, p1.getWallet());
         assertEquals(1522, p2.getWallet());
     }

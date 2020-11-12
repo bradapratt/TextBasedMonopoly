@@ -1,5 +1,9 @@
 package com.game.monopoly;
 
+/**
+ * Bank handles all business transactions in Monopoly involving money. Unlike the real-life Monopoly, no player
+ * is the bank in this text-based version of the game.
+ */
 class Bank {
     private static final int ZERO = 0;
 
