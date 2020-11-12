@@ -29,15 +29,13 @@ class Bank {
      * @param rent
      * @return
      */
-    public static boolean payRent(Player tenant, Player owner, int rent) {
-        // TODO if tenant can't afford can't to pay, then owner seizes all of tenants property and is bankrupt
-        boolean result = false;
+    public static void payRent(Player tenant, Player owner, int rent) {
         if (hasEnoughCash(tenant, rent)) {
             collect(tenant, rent);
             pay(owner, rent);
-            result = true;
+        }else{
+            tenant.declareBankruptcy(owner);
         }
-        return result;
     }
 
     /**

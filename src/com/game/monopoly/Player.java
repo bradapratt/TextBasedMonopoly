@@ -60,10 +60,10 @@ class Player {
     /**
      * Bought a new property, need add a copy to the property list for tracking.
      *
-     * @param copyOfNewProperty
+     * @param newProperty
      */
-    public void addProperty(Property copyOfNewProperty) {
-        properties.add(copyOfNewProperty);
+    public void addProperty(OwnableSpace newProperty) {
+        properties.add(newProperty);
         setNumRailRoads();
         setNumUtilities();
     }
@@ -80,17 +80,48 @@ class Player {
     }
 
     /**
-     * Save wallet amount to local var (and return), then set wallet to zero, clear property list.
+     * If current player owes money to the bank.
+     * Sets bankrupt flag, empties wallet, sets all property ownership to null, and clears out
+     * list of properties.
      */
-    public int declareBankruptcy() {
+    public void declareBankruptcy() {
         isBankrupt = true;
-        int balance = getWallet();
         setWallet(0);
-        return balance;
+        clearOwner();
+        getProperties().clear();
     }
 
-    public void removeAllProperties() {
+    /**
+     * If current player owes money to another player.
+     * Sets bankrupt flag, pays the debt holder the remainder of current player's wallet, transfers
+     * property ownership, and then clears out list of properties.
+     * @param debtHolder - person that current player owes money to (and can't pay full amount)
+     */
+    public void declareBankruptcy(Player debtHolder){
+        isBankrupt = true;
+        Bank.payRent(this, debtHolder, getWallet());
+        transferOwner(debtHolder);
         getProperties().clear();
+    }
+
+    /**
+     * Sets owner of all properties to null (no current owner)
+     */
+    private void clearOwner(){
+        for (OwnableSpace property: properties){
+            property.setOwned(false);
+            property.setOwner(null);
+        }
+    }
+
+    /**
+     * Sets owner of all properties to the new owner (debt holder)
+     * @param newOwner - person current player owes money to (and can't pay full amount)
+     */
+    private void transferOwner(Player newOwner){
+        for (OwnableSpace property: properties){
+            property.setOwner(newOwner);
+        }
     }
 
     /**
@@ -98,13 +129,11 @@ class Player {
      *
      * @return
      */
-    public List<OwnableSpace> getProperties() {
+    private List<OwnableSpace> getProperties() {
         return properties;
     }
 
-    /**
-     * create getNumRailRoads and getNumUtilities
-     */
+
 
     //**********ACCESSOR METHODS**********
     public int getNumRailRoads() {
@@ -190,10 +219,6 @@ class Player {
     public void setPassedGo(boolean passedGo) {
         this.passedGo = passedGo;
     }
-//
-//    public int compareTo(Player other) {
-//        return this.getWallet() - other.getWallet();
-//    }
 
     @Override
     public boolean equals(Object obj) {

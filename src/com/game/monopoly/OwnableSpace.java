@@ -20,6 +20,33 @@ public abstract class OwnableSpace extends Space {
         prompter = new Prompter(new Scanner(System.in));
     }
 
+    @Override
+    public void execute(Player tenant, int diceRoll, Prompter input) {
+        displayMessage();
+        if (!this.isOwned()) {
+            // ask player if they want to buy it
+            String buy = input.prompt("Would you like to buy this property? " +
+                    "(Y/N)", "Y|y|N|n", "Please enter Y or N.");
+            switch (buy) {
+                // try to buy property
+                case "Y", "y" -> {
+                    boolean paid = Bank.payForProperty(tenant, this.getPrice());
+                    if (paid) {
+                        this.setOwner(tenant);
+                        this.setOwned(true);
+                        tenant.addProperty(this);
+                    } else {
+                        // tell player they don't have enough money
+                        Message.cantBuyProperty(this.getName(), this.getPrice(), tenant.getWallet());
+                    }
+                }
+            }
+        } else {
+            Player owner = this.getOwner();
+            Bank.payRent(tenant, owner, this.rent(owner, diceRoll));
+        }
+    }
+
     /**
      * Calculates the rent total owed to a player that owns an own-able space.
      *

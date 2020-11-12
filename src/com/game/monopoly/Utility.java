@@ -29,35 +29,6 @@ public class Utility extends OwnableSpace {
     }
 
     @Override
-    public void execute(Player tenant, int diceRoll, Prompter input) {
-        if (!this.isOwned()) {
-            // ask player if they want to buy it
-            String buy = getPrompter().prompt("Would you like to buy this property? " +
-                    "(Y/N)", "Y|y|N|n", "Please enter Y or N.");
-            switch (buy) {
-                // try to buy property
-                case "Y", "y" -> {
-                    boolean paid = Bank.payForProperty(tenant, this.getPrice());
-                    if (paid) {
-                        this.setOwner(tenant);
-                        this.setOwned(true);
-                    } else {
-                        // tell player they don't have enough money
-                        Message.cantBuyProperty(this.getName(), this.getPrice(), tenant.getWallet());
-                    }
-                }
-                // TODO should we do something here?
-                case "N", "n" -> {
-
-                }
-            }
-        } else {
-            Player owner = this.getOwner();
-            boolean paid = Bank.payRent(tenant, owner, this.rent(owner, diceRoll));
-        }
-    }
-
-    @Override
     public void displayMessage() {
     }
 }

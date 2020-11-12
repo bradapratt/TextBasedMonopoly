@@ -91,7 +91,7 @@ public class Game {
         do {
             startGame();
             endGame();
-            playAgain();
+            playAgain(P1);
         }while (wantsToPlayAgain());
     }
 
@@ -99,9 +99,9 @@ public class Game {
      * Initializes game values such as number of rounds and players, and executes rounds.
      */
     public void startGame(){
-        inputNumPlayers();
-        inputNumRounds();
-        initializePlayers();
+        inputNumPlayers(P1);
+        inputNumRounds(P1);
+        initializePlayers(P1);
 
         while (checkRoundCount() > 0 && !isLastPlayerStanding()){
             setCurrentRound(getCurrentRound()+1);
@@ -113,12 +113,12 @@ public class Game {
     /**
      * Prompts user for the number of players and sets.
      */
-    private void inputNumPlayers(){
+    private void inputNumPlayers(Prompter input){
         boolean isNotValid = true;
         int num = 0;
 
         while (isNotValid){
-            String numP = P1.prompt("Please enter number of players, up to 8: ", "\\d", Message.invalidNumber());
+            String numP = input.prompt("Please enter number of players, up to 8: ", "\\d", Message.invalidNumber());
             num = Integer.parseInt(numP);
             if (num < MIN_PLAYERS || num > MAX_PLAYERS){
                 System.out.println("Number of players must be between 2 and 8. Please try again.");
@@ -132,12 +132,12 @@ public class Game {
     /**
      * Prompts user for the number of rounds to be played and sets.
      */
-    private void inputNumRounds(){
+    private void inputNumRounds(Prompter input){
         boolean isNotValid = true;
         int num = 0;
 
         while (isNotValid){
-            String numR = P1.prompt("Please enter number of desired rounds: ", "\\d+", Message.invalidNumber());
+            String numR = input.prompt("Please enter number of desired rounds: ", "\\d+", Message.invalidNumber());
             num = Integer.parseInt(numR);
             if (num >= MIN_ROUNDS){
                 isNotValid = false;
@@ -152,16 +152,16 @@ public class Game {
     /**
      * Create the player objects and initialize all their values.
      */
-    private void initializePlayers(){
+    private void initializePlayers(Prompter input){
         playerList = new ArrayList<>();
         bankruptcies = new Stack<>();
         List<String> available = Piece.classToString();
 
         for (int i = 1; i <= getNumPlayers(); i++){
-            String name = P1.prompt("Enter the name for Player" + i + ": ");
+            String name = input.prompt("Enter the name for Player" + i + ": ");
             boolean notValidPiece = true;
             while (notValidPiece) {
-                String piece = P1.prompt(Message.choosePiece(available));
+                String piece = input.prompt(Message.choosePiece(available));
                 if (available.contains(piece)) {
                     Piece piece1 = Piece.valueOf(piece);
                     available.remove(piece);
@@ -239,8 +239,8 @@ public class Game {
     /**
      * Prompts the player if they want to play again and updates the boolean var
      */
-    private void playAgain(){
-        String again = P1.prompt("Would you like to play again? (Y/N)", "Y|y|N|n", "Please enter Y or N.");
+    private void playAgain(Prompter input){
+        String again = input.prompt("Would you like to play again? (Y/N)", "Y|y|N|n", "Please enter Y or N.");
         switch (again){
             case "Y": case "y":
                 setWantsToPlayAgain(true);
