@@ -1,4 +1,10 @@
 package com.game.monopoly;
+/**
+ * * Player class creates the player and defines the player object.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ *  Last Edited: 11/11/2020
+ */
 
 /**
  * Player simulates the individual players in the Monopoly text-based game. Stores values
@@ -94,6 +100,7 @@ class Player {
      * list of properties (If current player owes money to the bank).
      */
     public void declareBankruptcy() {
+        Message.playerWentBankrupt(getName());
         isBankrupt = true;
         setWallet(0);
         clearOwner();
@@ -108,6 +115,7 @@ class Player {
      * @param debtHolder - person that current player owes money to (and can't pay full amount)
      */
     public void declareBankruptcy(Player debtHolder){
+        Message.playerWentBankruptToAnother(getName(), debtHolder.getName());
         isBankrupt = true;
         Bank.payRent(this, debtHolder, getWallet());
         transferOwner(debtHolder);
@@ -128,7 +136,7 @@ class Player {
      * Sets owner of all properties to the new owner (debt holder)
      * @param newOwner - person current player owes money to (and can't pay full amount)
      */
-    private void transferOwner(Player newOwner){
+    public void transferOwner(Player newOwner){
         for (OwnableSpace property: properties){
             property.setOwner(newOwner);
         }
@@ -155,7 +163,7 @@ class Player {
         return gamePiece;
     }
 
-    private int getLocation() {
+    public int getLocation() {
         return location;
     }
 
@@ -171,7 +179,7 @@ class Player {
         return passedGo;
     }
 
-    private List<OwnableSpace> getProperties() {
+    public List<OwnableSpace> getProperties() {
         return properties;
     }
 
@@ -187,7 +195,7 @@ class Player {
         this.gamePiece = gamePiece;
     }
 
-    private void setLocation(int location) {
+    public void setLocation(int location) {
         this.location = location;
     }
 
@@ -206,7 +214,12 @@ class Player {
                 counter++;
             }
         }
-        numRailRoads = counter;
+
+        if (numRailRoads >= MIN_NUM_RAILROAD && numRailRoads <= MAX_NUM_RAILROAD){
+            numRailRoads = counter;
+        }else{
+            System.out.println("Invalid number of railroads.");
+        }
     }
 
     private void setNumUtilities() {
@@ -216,7 +229,12 @@ class Player {
                 counter++;
             }
         }
-        numUtilities = counter;
+
+        if (numUtilities >= MIN_NUM_UTILITIES && numUtilities <= MAX_NUM_UTILITIES){
+            numUtilities = counter;
+        }else{
+            System.out.println("Invalid number of utilities.");
+        }
     }
 
     public void setPassedGo(boolean passedGo) {
