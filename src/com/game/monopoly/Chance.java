@@ -2,16 +2,19 @@ package com.game.monopoly;
 
 /**
  * Class Chance represents the Chance space on a Monopoly board.
- *
+ * <p>
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
  * Last Edited: 11/11/2020
  */
+
 import com.apps.util.Prompter;
+
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Chance extends RandomCard{
+public class Chance extends RandomCard {
     private static final int MIN = 1;
     private static final int MAX = 6;
+
     public Chance() {
         super("Chance");
     }
@@ -38,9 +41,9 @@ public class Chance extends RandomCard{
     /**
      * Generate random int to choose a "card" and take actions of that card.
      */
-    public void drawCard(Player player, int diceRoll){
+    public void drawCard(Player player, int diceRoll) {
         int rand = ThreadLocalRandom.current().nextInt(MIN, MAX + 1);
-        switch (rand){
+        switch (rand) {
             case 1:
                 Message.ChanceCard1();
                 Bank.pay(player, 400);

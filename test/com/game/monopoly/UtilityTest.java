@@ -44,7 +44,7 @@ public class UtilityTest {
         prop1.execute(p1, 5, input);
         prop2.execute(p1, 5, input);
         prop1.execute(p2, 12, input);
-        prop2.execute(p2,7, input);
+        prop2.execute(p2, 7, input);
 
         assertEquals(1390, p1.getWallet());
         assertTrue(prop1.isOwned());

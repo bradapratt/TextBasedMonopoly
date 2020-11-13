@@ -4,10 +4,11 @@ package com.game.monopoly;
  * All methods in this class will be static. Message class stores static message methods to be
  * throughout the text-based Monopoly implementation. It acts as a centralized repository for
  * all messages printed to the console.
- *
+ * <p>
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
  * Last Edited: 11/11/2020
  */
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +23,7 @@ class Message {
         StringBuilder msg = new StringBuilder("Current rankings: \n");
         int rank = 1;
 
-        for (Player player: currentRankings){
+        for (Player player : currentRankings) {
             msg.append("\t").append(rank).append(") ").append(player.getName()).append(": $");
             msg.append(player.getWallet()).append("\n");
             rank++;
@@ -39,7 +40,7 @@ class Message {
         StringBuilder msg = new StringBuilder("Final rankings: \n");
         int rank = 1;
 
-        for (Player player: finalRankings){
+        for (Player player : finalRankings) {
             msg.append("\t").append(rank).append(") ").append(player.getName()).append(": $");
             msg.append(player.getWallet()).append("\n");
             rank++;
@@ -53,14 +54,14 @@ class Message {
      * @throws IOException - Error reading file
      */
     public static void banner(String fileName, String folder) throws IOException {
-        try{
+        try {
             List<String> banner = Files.readAllLines(Path.of(folder, fileName));
 
-            for (String line : banner){
+            for (String line : banner) {
                 System.out.println(line);
             }
             System.out.println();
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Error displaying banner.");
         }
     }
@@ -68,15 +69,15 @@ class Message {
     /**
      * Displays the game over banner from file "endgame.txt"
      */
-    public static void gameOver(String fileName, String folder) throws IOException{
-        try{
+    public static void gameOver(String fileName, String folder) throws IOException {
+        try {
             List<String> banner = Files.readAllLines(Path.of(folder, fileName));
 
-            for (String line : banner){
+            for (String line : banner) {
                 System.out.println(line);
             }
             System.out.println();
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Error displaying game over.");
         }
     }
@@ -112,7 +113,7 @@ class Message {
      */
     public static String choosePiece(List<String> available) {
         StringBuilder msg = new StringBuilder("Choose a game piece for your character. Options: ");
-        for (String piece : available){
+        for (String piece : available) {
             msg.append("\n\t").append(piece);
         }
         msg.append("\nType your desired piece EXACTLY as shown: ");
@@ -134,7 +135,7 @@ class Message {
         StringBuilder msg = new StringBuilder("****************************************\n***************ROUND ");
         msg.append(currentRound);
         String current = Integer.toString(currentRound);
-        for (int i = 0; i < 19 - current.length(); i++){
+        for (int i = 0; i < 19 - current.length(); i++) {
             msg.append("*");
         }
         msg.append("\n****************************************\n");
@@ -162,7 +163,7 @@ class Message {
     public static void endOfRound(int currentRound) {
         StringBuilder msg = new StringBuilder("************End of Round " + currentRound);
         String current = Integer.toString(currentRound);
-        for (int i = 0; i < 15 - current.length(); i++){
+        for (int i = 0; i < 15 - current.length(); i++) {
             msg.append("*");
         }
         System.out.println(msg.toString());

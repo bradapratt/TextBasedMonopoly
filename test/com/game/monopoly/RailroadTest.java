@@ -31,7 +31,7 @@ public class RailroadTest {
     }
 
     @Test
-    public void testRentOneRROwnedByP1() throws Exception{
+    public void testRentOneRROwnedByP1() throws Exception {
         Prompter input = new Prompter(new Scanner(new File("responses/responses.txt")));
         prop1.execute(p1, 5, input);
         prop1.execute(p2, 5, input);
@@ -44,7 +44,7 @@ public class RailroadTest {
     }
 
     @Test
-    public void testRentTwoRROwnedByP1() throws Exception{
+    public void testRentTwoRROwnedByP1() throws Exception {
         Prompter input = new Prompter(new Scanner(new File("responses/responses.txt")));
         prop1.execute(p1, 5, input);
         prop2.execute(p1, 5, input);

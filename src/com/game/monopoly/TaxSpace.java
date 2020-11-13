@@ -2,7 +2,7 @@ package com.game.monopoly;
 
 import com.apps.util.Prompter;
 
-public class TaxSpace extends Space{
+public class TaxSpace extends Space {
     private static final double TEN_PERCENT = 0.10;
     private int taxAmount;
 

@@ -2,10 +2,11 @@ package com.game.monopoly;
 
 /**
  * Piece is an enum type class that sets all available player pieces represented in Monopoly.
- *
+ * <p>
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
  * Last Edited: 11/10/2020
  */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ enum Piece {
      * Generates a list of toStrings for enum class. Useful for comparing against user input.
      * @return pieces - list of all enums to strings
      */
-    public static List<String> classToString(){
+    public static List<String> classToString() {
         List<String> pieces = new ArrayList<>();
         pieces.add(Piece.SCOTTISH_TERRIER.toString());
         pieces.add(Piece.BATTLESHIP.toString());

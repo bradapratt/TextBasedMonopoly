@@ -37,7 +37,7 @@ class Bank {
         if (hasEnoughCash(tenant, rent)) {
             collect(tenant, rent);
             pay(owner, rent);
-        }else{
+        } else {
             tenant.declareBankruptcy(owner);
         }
     }

@@ -2,10 +2,11 @@ package com.game.monopoly;
 
 /**
  * Test class for Game.java.
- *
+ * <p>
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
  * Last Edited: 11/11/2020
  */
+
 import com.apps.util.Prompter;
 import org.junit.Before;
 import org.junit.Test;

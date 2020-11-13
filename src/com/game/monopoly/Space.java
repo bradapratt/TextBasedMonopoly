@@ -3,16 +3,17 @@ package com.game.monopoly;
 /**
  * Abstract class that sets the framework for all descendants that represent the various
  * game spaces on a Monopoly board.
- *
+ * <p>
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
  * Last Edited: 11/11/2020
  */
+
 import com.apps.util.Prompter;
 
 public abstract class Space {
     private String name;
 
-    public Space(String name){
+    public Space(String name) {
         this.name = name;
     }
 
@@ -23,6 +24,7 @@ public abstract class Space {
      * @param input - a prompter input for testing purposes
      */
     public abstract void execute(Player player, int diceRoll, Prompter input);
+
     public abstract void displayMessage();
 
     //**********ACCESSOR METHODS**********

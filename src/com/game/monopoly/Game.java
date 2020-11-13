@@ -4,11 +4,13 @@ package com.game.monopoly;
  * Game class is the controller for a text-based Monopoly board game. It manages all other classes
  * according to the game rules. It also communicates directly with the players and prompts them
  * for input.
- *
+ * <p>
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
  * Last Edited: 11/11/2020
  */
+
 import com.apps.util.Prompter;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,7 +29,6 @@ public class Game {
     private int numPlayers;
     private boolean lastPlayerStanding;
     private boolean wantsToPlayAgain;
-
 
 
     /**
@@ -96,19 +97,19 @@ public class Game {
             initializeGame();
             endGame();
             playAgain(P1);
-        }while (wantsToPlayAgain());
+        } while (wantsToPlayAgain());
     }
 
     /**
      * Initializes game values such as number of rounds and players, and executes rounds.
      */
-    private void initializeGame(){
+    private void initializeGame() {
         inputNumPlayers(P1);
         inputNumRounds(P1);
         initializePlayers(P1);
 
-        while (checkRoundCount() > 0 && !isLastPlayerStanding()){
-            setCurrentRound(getCurrentRound()+1);
+        while (checkRoundCount() > 0 && !isLastPlayerStanding()) {
+            setCurrentRound(getCurrentRound() + 1);
             startRound();
             endRound();
         }
@@ -117,7 +118,7 @@ public class Game {
     /**
      * Prompts user for the number of players and sets.
      */
-    private void inputNumPlayers(Prompter input){
+    private void inputNumPlayers(Prompter input) {
         String numP = input.prompt("Please enter number of players, up to 8: ", "[2-8]", Message.invalidNumPlayers());
         int num = Integer.parseInt(numP);
 
@@ -127,17 +128,17 @@ public class Game {
     /**
      * Prompts user for the number of rounds to be played and sets.
      */
-    private void inputNumRounds(Prompter input){
+    private void inputNumRounds(Prompter input) {
         boolean isNotValid = true;
         int num = 1;
 
-        while (isNotValid){
+        while (isNotValid) {
             String numR = input.prompt("Please enter number of desired rounds: ", "\\d{1,4}+", Message.invalidNumRounds());
             num = Integer.parseInt(numR);
 
-            if (num < 1){
+            if (num < 1) {
                 System.out.println(Message.invalidNumRounds());
-            }else{
+            } else {
                 isNotValid = false;
             }
         }
@@ -149,10 +150,10 @@ public class Game {
     /**
      * Create the player objects and initialize all their values.
      */
-    private void initializePlayers(Prompter input){
+    private void initializePlayers(Prompter input) {
         List<String> available = Piece.classToString();
 
-        for (int i = 1; i <= getNumPlayers(); i++){
+        for (int i = 1; i <= getNumPlayers(); i++) {
             String name = input.prompt("Enter the name for Player" + i + ": ");
             boolean notValidPiece = true;
             while (notValidPiece) {
@@ -163,7 +164,7 @@ public class Game {
                     Player current = new Player(name, piece1, i);
                     playerList.add(current);
                     notValidPiece = false;
-                }else{
+                } else {
                     Message.invalidPiece();
                 }
             }
@@ -173,12 +174,12 @@ public class Game {
     /**
      * Game will begin each round, and rotate through players' turns.
      */
-    private void startRound(){
+    private void startRound() {
         //for each Player: rollDice() x2, takeTurn
         Message.displayRoundCount(getCurrentRound());
         pause(3000);
 
-        for (Player player: playerList){
+        for (Player player : playerList) {
             int roll1 = rollDice();
             int roll2 = rollDice();
             Message.playerTurn(player, roll1, roll2);
@@ -189,7 +190,7 @@ public class Game {
             System.out.println();
             checkBankruptcy(player);
 
-            if (playerList.size() == 1){
+            if (playerList.size() == 1) {
                 setLastPlayerStanding(true);
                 break;
             }
@@ -203,7 +204,7 @@ public class Game {
      * @param player - current player
      */
     private void checkBankruptcy(Player player) {
-        if (player.isBankrupt()){
+        if (player.isBankrupt()) {
             bankruptcies.push(player);
             playerList.remove(player);
         }
@@ -223,7 +224,7 @@ public class Game {
     /**
      * Game will end the round, display current rankings, notify #of rounds left
      */
-    private void endRound(){
+    private void endRound() {
         Message.endOfRound(getCurrentRound());
         displayCurrentRankings();
         Message.remainingRounds(checkRoundCount());
@@ -239,13 +240,13 @@ public class Game {
                 .sorted(Comparator.comparing(Player::getWallet).reversed())
                 .collect(Collectors.toList());
 
-        if (isLastPlayerStanding()){
+        if (isLastPlayerStanding()) {
             Message.endGame_lastPlayer(playerList.get(0));
-        }else{
+        } else {
             Message.endGame_lastRound(playerList.get(0));
         }
 
-        while(!bankruptcies.isEmpty()){
+        while (!bankruptcies.isEmpty()) {
             finalRankings.add(bankruptcies.pop());
         }
         Message.displayFinalRankings(finalRankings);
@@ -255,14 +256,16 @@ public class Game {
     /**
      * Prompts the player if they want to play again and updates the boolean var
      */
-    private void playAgain(Prompter input){
+    private void playAgain(Prompter input) {
         String again = input.prompt("Would you like to play again? (Y/N) ", "Y|y|N|n", "Please enter Y or N.");
-        switch (again){
-            case "Y": case "y":
+        switch (again) {
+            case "Y":
+            case "y":
                 setWantsToPlayAgain(true);
                 Message.playAgain();
                 break;
-            case "N": case "n":
+            case "N":
+            case "n":
                 setWantsToPlayAgain(false);
                 Message.dontPlayAgain();
                 break;
@@ -273,14 +276,14 @@ public class Game {
      * Accessory method for checking number rounds that are left.
      * @return how close we are to the final round
      */
-    private int checkRoundCount(){
+    private int checkRoundCount() {
         return getNumRounds() - getCurrentRound();
     }
 
     /**
      * Displays current winner/rankings to console.
      */
-    private void displayCurrentRankings(){
+    private void displayCurrentRankings() {
         List<Player> currentRankings = playerList.stream()
                 .sorted(Comparator.comparing(Player::getWallet).reversed())
                 .collect(Collectors.toList());
@@ -292,7 +295,7 @@ public class Game {
      * Returns the roll for one six-sided die.
      * @return the dice roll (1-6)
      */
-    private int rollDice(){
+    private int rollDice() {
         return Dice.rollDice();
     }
 
@@ -300,8 +303,8 @@ public class Game {
      * Pauses program for a period of time passed in. Improves readability for players.
      * @param pauseTime - amount of time to be paused, in milliseconds
      */
-    private void pause(int pauseTime){
-        try{
+    private void pause(int pauseTime) {
+        try {
             Thread.sleep(pauseTime);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -309,15 +312,17 @@ public class Game {
     }
 
     //***************ACCESSOR METHODS***************
-    private int getNumRounds(){
+    private int getNumRounds() {
         return numRounds;
     }
 
-    private int getNumPlayers(){
+    private int getNumPlayers() {
         return numPlayers;
     }
 
-    private int getCurrentRound(){ return currentRound; }
+    private int getCurrentRound() {
+        return currentRound;
+    }
 
     private boolean isLastPlayerStanding() {
         return lastPlayerStanding;
