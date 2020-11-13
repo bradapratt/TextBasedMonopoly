@@ -21,7 +21,6 @@ package com.game.monopoly;
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
  * Last Edited: 11/12/2020
  */
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -122,7 +121,7 @@ class Player {
      *
      * @param debtHolder - person that current player owes money to (and can't pay full amount)
      */
-    public void declareBankruptcy(Player debtHolder) {
+    public void declareBankruptcy(Player debtHolder){
         Message.playerWentBankruptToAnother(getName(), debtHolder.getName());
         isBankrupt = true;
         Bank.payRent(this, debtHolder, getWallet());
@@ -133,8 +132,8 @@ class Player {
     /**
      * Sets owner of all properties to null (no current owner)
      */
-    public void clearOwner() {
-        for (OwnableSpace property : properties) {
+    public void clearOwner(){
+        for (OwnableSpace property: properties){
             property.setOwned(false);
             property.setOwner(null);
         }
@@ -144,8 +143,8 @@ class Player {
      * Sets owner of all properties to the new owner (debt holder)
      * @param newOwner - person current player owes money to (and can't pay full amount)
      */
-    public void transferOwner(Player newOwner) {
-        for (OwnableSpace property : properties) {
+    public void transferOwner(Player newOwner){
+        for (OwnableSpace property: properties){
             property.setOwner(newOwner);
             newOwner.addProperty(property);
         }
@@ -224,9 +223,9 @@ class Player {
             }
         }
 
-        if (numRailRoads >= MIN_NUM_RAILROAD && numRailRoads <= MAX_NUM_RAILROAD) {
+        if (numRailRoads >= MIN_NUM_RAILROAD && numRailRoads <= MAX_NUM_RAILROAD){
             numRailRoads = counter;
-        } else {
+        }else{
             System.out.println("Invalid number of railroads.");
         }
     }
@@ -239,9 +238,9 @@ class Player {
             }
         }
 
-        if (numUtilities >= MIN_NUM_UTILITIES && numUtilities <= MAX_NUM_UTILITIES) {
+        if (numUtilities >= MIN_NUM_UTILITIES && numUtilities <= MAX_NUM_UTILITIES){
             numUtilities = counter;
-        } else {
+        }else{
             System.out.println("Invalid number of utilities.");
         }
     }

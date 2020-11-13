@@ -3,7 +3,6 @@ package com.game.monopoly;
 /**
  * Test class for FreeParking.java.
  */
-
 import org.junit.Before;
 import org.junit.Test;
 

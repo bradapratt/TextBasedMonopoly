@@ -1,5 +1,11 @@
 package com.game.monopoly;
 
+/**
+ * Test class for Property.java.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/12/2020
+ */
 import com.apps.util.Prompter;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,9 +41,5 @@ public class PropertyTest {
         assertEquals(1265, p1.getWallet());
         assertTrue(prop1.isOwned());
         assertTrue(p1.equals(prop1.getOwner()));
-    }
-
-    @Test
-    public void execute() {
     }
 }

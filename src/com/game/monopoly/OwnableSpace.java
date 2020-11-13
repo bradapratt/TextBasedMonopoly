@@ -1,9 +1,13 @@
 package com.game.monopoly;
 
+/**
+ * OwnableSpace is an abstract class that defines the process of execution
+ * for all spaces on a Monopoly board that can be owned by a player.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/12/2020
+ */
 import com.apps.util.Prompter;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public abstract class OwnableSpace extends Space {
@@ -41,10 +45,12 @@ public abstract class OwnableSpace extends Space {
                     }
                 }
             }
-        } else {
+        } else if (getOwner().getGamePiece() != tenant.getGamePiece()){
             Player owner = this.getOwner();
             int rent = this.rent(diceRoll);
             Bank.payRent(tenant, owner, rent);
+        }else{
+            System.out.println("You already own this property!");
         }
     }
 

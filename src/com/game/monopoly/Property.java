@@ -1,5 +1,13 @@
 package com.game.monopoly;
 
+/**
+ * Property implements property spaces on a Monopoly board, that can normally
+ * have houses/ hotels built on them (but not in this game).
+ * Examples include Park Place, Boardwalk, New York Avenue, etc.
+ *
+ * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
+ * Last Edited: 11/12/2020
+ */
 public class Property extends OwnableSpace {
     private int rentAmt;
 

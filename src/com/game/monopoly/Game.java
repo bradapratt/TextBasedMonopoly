@@ -6,7 +6,7 @@ package com.game.monopoly;
  * for input.
  * <p>
  * Authors: Bradley Pratt, Christopher Palmer, & Tyrone Moore
- * Last Edited: 11/11/2020
+ * Last Edited: 11/12/2020
  */
 
 import com.apps.util.Prompter;
@@ -61,7 +61,7 @@ public class Game {
         BOARD.add(new Railroad("Pennsylvania Railroad", 200));         //14
         BOARD.add(new Property("St. James Place", 180, 14));      //15
         BOARD.add(new CommunityChest());                                          //16
-        BOARD.add(new Property("Tennessee", 180, 14));            //17
+        BOARD.add(new Property("Tennessee Avenue", 180, 14));     //17
         BOARD.add(new Property("New York Avenue", 200, 16));      //18
         BOARD.add(new FreeParking());                                             //19
         BOARD.add(new Property("Kentucky Avenue", 220, 18));      //20
