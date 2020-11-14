@@ -24,14 +24,16 @@ public class Railroad extends OwnableSpace {
      */
     @Override
     public int rent(int diceRoll) {
-        int result = switch (getOwner().getNumRailRoads()) {
-            case 1 -> 25;
-            case 2 -> 50;
-            case 3 -> 100;
-            case 4 -> 200;
-
-            default -> throw new IllegalStateException("Unexpected value: " + getOwner().getNumRailRoads());
-        };
+        int result = 0;
+        switch (getOwner().getNumRailRoads()) {
+            case 1: result = 25;
+            break;
+            case 2: result = 50;
+            break;
+            case 3: result = 100;
+            break;
+            case 4: result = 200;
+        }
         Message.landedOnOwned_Owner(getOwner());
         Message.numRailroadsOwned(getOwner().getName(), getOwner().getNumRailRoads());
         Message.landedOnOwned_Rent(result);

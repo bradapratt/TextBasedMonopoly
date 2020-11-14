@@ -23,12 +23,12 @@ public class Utility extends OwnableSpace {
      */
     @Override
     public int rent(int diceRoll) {
-        int result = switch (getOwner().getNumUtilities()) {
-            case 1 -> 4 * diceRoll;
-            case 2 -> 10 * diceRoll;
-
-            default -> throw new IllegalStateException("Unexpected value: " + diceRoll);
-        };
+        int result = 0;
+        switch (getOwner().getNumUtilities()) {
+            case 1: result = 4 * diceRoll;
+            break;
+            case 2: result = 10 * diceRoll;
+        }
         Message.landedOnOwned_Owner(getOwner());
         Message.numUtilitiesOwned(getOwner().getName(), getOwner().getNumUtilities());
         Message.landedOnOwned_Rent(result);

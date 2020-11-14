@@ -33,7 +33,7 @@ public abstract class OwnableSpace extends Space {
             String buy = input.prompt(Message.promptBuyProperty(getPrice()), "Y|y|N|n", "Please enter Y or N.");
             switch (buy) {
                 // try to buy property
-                case "Y", "y" -> {
+                case "Y": case "y": {
                     boolean paid = Bank.payForProperty(tenant, this.getPrice());
                     if (paid) {
                         this.setOwner(tenant);
